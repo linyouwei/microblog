@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE `category`(
-  `id` INT(5) NOT NULL AUTO_INCREMENT ,
-  `category_name` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+drop table if exists `category`;
+create table `category`(
+  `id` int(5) not null auto_increment ,
+  `category_name` varchar(50) not null,
+  primary key (`id`)
+) engine=innodb default charset=utf8;

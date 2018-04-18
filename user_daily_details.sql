@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS `USER_DAILY_DETAILS`;
-CREATE TABLE `USER_DAILY_DETAILS`(
-  `ID` INT(5) NOT NULL AUTO_INCREMENT ,
-  `USER_CATEGORY_ID` INT(5) NOT NULL,
-   `DAILY_ID` INT(5) NOT NULL  ,
-  PRIMARY KEY (`ID`)
-) ENGINE=INNODB DEFAULT CHARSET=UTF8;
+drop table if exists `user_daily_details`;
+create table `user_daily_details`(
+  `id` int(5) not null auto_increment ,
+  `user_category_id` int(5) not null,
+   `daily_id` int(5) not null  ,
+  primary key (`id`)
+) engine=innodb default charset=utf8;

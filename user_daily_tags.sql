@@ -1,9 +1,9 @@
 
-DROP TABLE IF EXISTS `USER_DAILY_TAGS`;
-CREATE TABLE `USER_DAILY_TAGS`(
-  `ID` INT(5) NOT NULL AUTO_INCREMENT ,
-   `USER_LOGIN_ID` INT(5) NOT NULL,
-  `DAILY_ID` INT(5) NOT NULL  ,
-   `NAME` VARCHAR(50) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=INNODB DEFAULT CHARSET=UTF8;
+drop table if exists `user_daily_tags`;
+create table `user_daily_tags`(
+  `id` int(5) not null auto_increment ,
+   `user_login_id` int(5) not null,
+  `daily_id` int(5) not null  ,
+   `name` varchar(50) not null,
+  primary key (`id`)
+) engine=innodb default charset=utf8;

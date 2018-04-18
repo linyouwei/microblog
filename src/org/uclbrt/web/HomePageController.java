@@ -99,8 +99,18 @@ public class HomePageController implements SystemConstant {
 	}
 	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.GET)
 	public String publishEdit(ModelMap map,HttpSession session) {
+		//获取用户基本信息
+		UserLogin user = (UserLogin) session.getAttribute("user");
+		if(!EmptyUtil.isNullOrEmpty(user)){
+			//查询博客分类
+			
+			//查询个人分类
+			
+			
 
-		return "../jsp/topic/publishEdit";	
+			return "../jsp/topic/publishEdit";	
+		}
+		return "../jsp/user/login";	
 	}
 
 	
