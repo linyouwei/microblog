@@ -97,6 +97,11 @@ public class HomePageController implements SystemConstant {
 		}
 		return "../jsp/topic/setting";	
 	}
+	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.GET)
+	public String publishEdit(ModelMap map,HttpSession session) {
+
+		return "../jsp/topic/publishEdit";	
+	}
 
 	
 	
