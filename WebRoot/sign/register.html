@@ -1,0 +1,51 @@
+<! DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/microblog/scripts/common/assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="/microblog/styles/login.css" />
+</head>
+<body>
+	<div class="sign">
+		<div class="header">
+			<div class="am-g">
+				<h1>Simple Blog</h1>
+			</div>
+			<hr />
+		</div>
+		<div class="main">
+			<h4 class="title">
+				<div class="normal-title">
+					<a class="" href="/microblog/sign/login.html">登录</a> <b>·</b> <a
+						id="js-sign-up-btn" class="active" href="/microblog/sign/register.html">注册</a>
+				</div>
+			</h4>
+			<form post="" class="am-form">
+				<fieldset class="am-form-set">
+					<div class="input-prepend restyle">
+						<input placeholder="你的昵称" type="text" value=""
+							name="user_nickname" id="user_nickname"> <i
+							class="am-icon-user"></i>
+					</div>
+					<div class="input-prepend restyle">
+						<input placeholder="设置密码" type="text" value=""
+							name="user_password" id="user_password"> <i
+							class="am-icon-user"></i>
+					</div>
+
+				</fieldset>
+				<div>
+					<input id="sign-up" name="commit" value="注册" class="sign-up-button"
+						data-disable-with="注册">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+<!-- 框架JS -->
+<script src="/microblog/scripts/common/assets/js/jquery.min.js"></script>
+<script src="/microblog/scripts/common/assets/js/amazeui.min.js"></script>
+<script src="/microblog/scripts/common/layer/layer.js"></script>
+<!-- 页面事件处理JS -->
+<script type="text/javascript" src="/microblog/scripts/register.js"></script>
+</html>

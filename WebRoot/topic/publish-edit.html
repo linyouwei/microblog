@@ -1,0 +1,319 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>BLOG</title>
+    <script src="/static/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css"/>
+    <script charset="utf-8" src="/static/kindeditor/kindeditor-min.js"></script>
+    <script charset="utf-8" src="/static/kindeditor/lang/zh_CN.js"></script>
+    <style type="text/css">
+        .search-btn {
+            background: none repeat scroll 0 0 #0e90d2;
+            border: 0 none;
+            color: #FFFFFF;
+            height: 30px;
+            width: 70px;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 25px;
+        }
+
+        .btn-hollow {
+            border: 1px solid #0e90d2;
+            color: #0e90d2 !important;
+        }
+
+        .btn-hollow {
+            padding: 4px 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 14px;
+            border-radius: 40px;
+        }
+
+        .hide {
+            position: absolute;
+            display: block !important;
+            width: 82px;
+            opacity: 0;
+        }
+
+        input {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+        }
+
+        .btn-submit {
+            border: 1px solid #0e90d2;
+            color: #0e90d2 !important;
+            padding-left: 20px;
+        }
+
+        .am-form-group img {
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+        }
+
+        .btn-color {
+            color: #0e90d2;
+        }
+
+
+    </style>
+
+    <style>
+        .div-tags {
+            width: 50px;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .input-tags {
+            width: 50px;
+            height: 30px;
+
+        }
+
+        .div-float {
+            float: left;
+        }
+
+        .div-clear-float {
+            clear: both;
+            height: 0;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+
+<body id="blog">
+<header class="am-topbar">
+    <h1 class="am-topbar-brand">
+        <a class="am-active" href="{% url 'myblog:index' %}">微书</a>
+    </h1>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li class="am-active"><a href="#">发现</a></li>
+            <li class="am-active"><a href="#">关注</a></li>
+            <li class="am-active"><a href="#">消息</a></li>
+        </ul>
+
+        <form class="am-topbar-form am-topbar-left am-form-inline" role="search">
+            <div class="am-form-group">
+                <input type="text" class="am-form-field am-input-sm" id="search-data" value="{{searchVal}}">
+                <input type="button" class="search-btn" id="search-btn" value="搜索">
+            </div>
+        </form>
+
+        <div class="am-topbar-right">
+            {% if username %}
+            <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
+                <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle"
+                        data-am-dropdown-toggle>{{ username }} <span class="am-icon-caret-down"></span></button>
+                <ul class="am-dropdown-content">
+                    <li><a href="{% url 'myblog:sign_up' %}">发布</a></li>
+                    <li><a href="{% url 'myblog:sign_out' %}">退出</a></li>
+                    <li><a href="{% url 'myblog:sign_up' %}">设置</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="am-topbar-right">
+                <a href="/myblog/register" class="am-btn am-btn-primary am-topbar-btn am-btn-sm color">注册</a>
+            </div>
+            <div class="am-topbar-right">
+                <a href="/myblog/login" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+<div class="am-g am-g-fixed" id="dataListDiv">
+    <div class="am-u-md-3 am-u-sm-12">
+        <div class="am-g am-g-fixed">
+            <ul class="am-nav">
+                <li id="basic-set"><a href="#">文章管理</a></li>
+                <li id="user-data"><a href="#">专栏管理</a></li>
+                <li id="comment-manage"><a href="#">评论管理</a></li>
+                <li id="category-manage"><a href="#">个人分类管理</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="am-u-md-9 am-u-sm-12" id="user-list">
+        <input type="text" id="txtTitle" maxlength="100" placeholder="输入文章标题" style="margin-bottom: 20px;">
+        <textarea id="mul_input" name="content"
+                  style="width:700px;height:200px;visibility:hidden;display: block;"></textarea>
+        <br>
+        <div id="moreDiv">
+            <div class="pos-box">
+                <div>
+                    <div class="div-float"><label class="labTitle col-form-label">文章标签：</label></div>
+                    <div id="InputsWrapper" class="div-float">
+                    </div>
+                    <div class="div-float">
+                        <button id="addTag">添加标签</button>
+                    </div>
+                    <div class="div-clear-float"></div>
+
+                </div>
+                <div>
+                    <div class="div-float"><label class="labTitle col-form-label">个人分类：</label></div>
+                    <div id="categoryWrapper" class="div-float">
+                    </div>
+                    <div class="div-float">
+                        <button id="addCategory">添加新分类</button>
+                    </div>
+                    <div class="div-clear-float"></div>
+                    {% if existUserCategory %}
+                        {% for category in existUserCategory %}
+                        <input type="checkbox" value="{{category.id}}" name="existUserCategory">
+                        <span>{{category.name}}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group row form-control-sm">
+                    <label class="labTitle col-form-label">博客分类：</label>
+                    <div style="display: inline-block">
+                        <select  id="blogCategory" name="blogCategory">'
+                            <option value="0">选择分类</option>
+                            {% for c in categoryList%}
+                            <option value="{{c.id}}" name="category">{{c.name}}</option>
+                            {% endfor%}
+                        </select>
+                    </div>
+                </div>
+                <div class="opt-box row unfull">
+                    <label class="labTitle col-form-label"></label>
+                    <div class="txt-box">
+                        <input id="btnPublish" type="button" class="btn btn-outline-danger" value="发布博客" title="发布博客">
+                        <input id="btnDraft" type="button" class="btn btn-outline-danger ml-24 btn-baocun" value="保存草稿"
+                               title="保存文章并留在当前页">
+                        <input id="btnCancel" type="button" class="btn btn-outline-secondary ml-24 btn-shanchu"
+                               title="返回列表页" value="返回">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var editor;
+    $(function () {
+        KindEditor.ready(function (K) {
+            editor = K.create('textarea[name="content"]', {
+                allowFileManager: true
+            });
+
+        });
+        $('#btnPublish').click(function (e) {
+            //标题、文章内容、博客分类是必选
+            // 文章标签、个人分类是可选
+//            if($("#txtTitle").val().length==0){
+//                alert('标题不能为空');
+//                return false;
+//            }
+//            if( editor.html().length==0){
+//                 alert('内容不能为空');
+//                return false;
+//            }
+            var category = $("#blogCategory option:selected").val();
+//            console.log(category);
+//            if(category==0){
+//                alert('选择博客分类');
+//                return false;
+//            }
+            var tagsList = $("input[name='tags']");
+            var tagsArr = [];
+            for (var i = 0; i < tagsList.length; i++) {
+                tagsArr.push(tagsList.eq(i).val());
+            }
+            console.log(tagsArr);
+            var userCategoryList = $("input[name='userCategory']");
+            var userCategoryArr = [];
+            for (var i = 0; i < userCategoryList.length; i++) {
+                userCategoryArr.push(userCategoryList.eq(i).val());
+            }
+            // 只需传category_id
+            var existUserCategoryList = $("input[name='existUserCategory']:checked");
+            var existUserCategoryArr = [];
+            for (var i = 0; i < existUserCategoryList.length; i++) {
+                existUserCategoryArr.push(existUserCategoryList.eq(i).val());
+            }
+            console.log(existUserCategoryArr);
+
+
+            $.post("/myblog/publishEdit/", {
+                'title':$("#txtTitle").val(),
+                'content': editor.html(),
+                'tagsArr':tagsArr,
+                'userCategoryList':userCategoryArr,
+                'existUserCategoryList':existUserCategoryArr,
+                'category':category,
+            }, function (data) {
+                console.log(data)
+                    if(data.status==200){
+                        window.location.href='/myblog/publishSuccess'
+                    }
+            })
+
+        });
+
+    })
+
+
+</script>
+<footer class="blog-footer"></footer>
+
+<script>
+    $(function () {
+        var initCount = $("#InputsWrapper").length;
+        var x = 1;
+        var FieldCount = 0;
+        $("#addTag").click(function () {
+            FieldCount++;
+            $("#InputsWrapper").append('<div class="div-tags"><input class="input-tags" type="text"name="tags" id="tags_' + FieldCount + '"/><a href="#" class="removeclass">×</a></div>')
+        })
+        $("body").on('click', '.removeclass', function () {
+            $(this).parent('div').remove();
+        })
+    })
+</script>
+<script>
+    $(function () {
+        var categoryCount = $("#categoryWrapper").length;
+        var categoryCount = 0;
+        $("#addCategory").click(function () {
+            categoryCount++;
+            $("#categoryWrapper").append('<div class="div-tags"><input class="input-tags" type="text"name="userCategory" id="category_' + categoryCount + '"/><a href="#" class="removeclass">×</a></div>')
+        })
+        $("body").on('click', '.removeclass', function () {
+            $(this).parent('div').remove();
+        })
+    })
+</script>
+<script>
+    $(function () {
+        $("#input-button").click(function () {
+            alert($('#mul_input').val())
+        })
+    })
+</script>
+</body>
+</html>

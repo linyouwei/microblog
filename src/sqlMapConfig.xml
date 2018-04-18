@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration  
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>
+    <!-- 配置mybatis的环境信息，与spring整合，该信息由spring来管理 -->  
+    <environments default="development">  
+        <environment id="development">  
+            <!-- 配置JDBC事务控制，由mybatis进行管理 -->  
+            <transactionManager type="JDBC"></transactionManager>  
+            <!-- 配置数据源，采用mybatis连接池 -->  
+            <dataSource type="POOLED">  
+                <property name="driver" value="com.mysql.jdbc.Driver" />  
+                <property name="url" value="jdbc:mysql://120.79.140.153:3306/microblog" />  
+                <property name="username" value="root" />  
+                <property name="password" value="111111b" />  
+            </dataSource>  
+        </environment>  
+    </environments>
+    
+    <mappers>  
+     <mapper resource="org/uclbrt/dao/DailyMapper.xml" />   
+     <mapper resource="org/uclbrt/dao/UserLoginMapper.xml" />  
+     <mapper resource="org/uclbrt/dao/CommentMapper.xml" />  
+     <mapper resource="org/uclbrt/dao/UserDetailMapper.xml" />  
+    </mappers>  
+</configuration>  

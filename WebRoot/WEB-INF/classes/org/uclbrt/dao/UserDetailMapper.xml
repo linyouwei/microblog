@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.uclbrt.dao.UserDetailMapper">
+   <resultMap id="detailResultMap" type="org.uclbrt.entity.UserDetail"  >
+    <id property="gender" column="gender" />  
+    <id property="img_path" column="img_path" />  
+    <id property="birthday" column="birthday" />  
+    <id property="marriage" column="marriage" />  
+	    <association property="userInfo" resultMap="userResult">     
+	    </association>  
+	    <association property="province" resultMap="provinceResult">     
+	    </association>  
+	    <association property="city" resultMap="cityResult">     
+	    </association>  
+	</resultMap>
+	 <resultMap id="userResult" type="org.uclbrt.entity.UserLogin">
+	  			<id property="id" column="u_id" />  
+	            <result property="userName" column="user_name" />  
+	            <result property="password" column="password" />  
+	            <result property="createdTime" column="created_time" />  
+	            <result property="roleId" column="role_id" />
+	 </resultMap>  
+	  <resultMap id="provinceResult" type="org.uclbrt.entity.Province">
+	  			<id property="code" column="p_id" />  
+	            <result property="name" column="p_name" />  
+	 </resultMap>  
+	  <resultMap id="cityResult" type="org.uclbrt.entity.City">
+	  			<id property="code" column="c_id" />  
+	            <result property="name" column="c_name" />  
+	 </resultMap>            
+    <select id="findDetailByUserId" parameterType="int" resultMap="detailResultMap">
+ 	SELECT ud.id,user_login_id u_id,gender,img_path,birthday,province p_id,city c_id,marriage,user_name,role_id
+	FROM ((`user_details` ud LEFT JOIN `user_login` ul ON  ud.`user_login_id`=ul.`id`) LEFT JOIN `province` p ON ud.`province`=p.`code` ) LEFT JOIN `city` c 
+	ON ud.`city`=c.`code` WHERE user_login_id=#{id}
+ 	</select> 
+	
+</mapper>

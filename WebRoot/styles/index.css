@@ -1,0 +1,15 @@
+﻿.search-btn {
+	background: none repeat scroll 0 0 #0e90d2;
+	border: 0 none;
+	color: #FFFFFF;
+	height: 30px;
+	width: 70px;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 25px;
+}
+
+#paging li {
+	float: left;
+	list-style: none;
+}

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.uclbrt.dao.DailyMapper">
+	<!--<select id="findAllDaily" resultType="org.uclbrt.entity.Daily" parameterType="int">
+		select * from `DAILY` where user_id= #{userId}; ;
+	</select>
+-->
+	<!-- 多对一查询  -->
+    <resultMap id="dailyResultMap" type="org.uclbrt.entity.Daily"  >
+    <id property="id" column="d_id" />  
+    <id property="title" column="title" />  
+    <id property="body" column="body" />  
+    <id property="createdTime" column="d_created_time" />  
+    <id property="modifiedTime" column="modified_time" />
+    <id property="categoryId" column="category_id" />  
+    <id property="click" column="click" />  
+	    <association property="userInfo" resultMap="userResult">     
+	    </association>  
+	</resultMap>
+	 <resultMap id="userResult" type="org.uclbrt.entity.UserLogin">
+	  			<id property="id" column="u_id" />  
+	            <result property="userName" column="user_name" />  
+	            <result property="password" column="password" />  
+	            <result property="createdTime" column="user_created_time" />  
+	            <result property="roleId" column="role_id" />
+	 </resultMap>      
+    <select id="getDailyListByUserId" parameterType="int" resultMap="dailyResultMap">
+ 	select daily.id as d_id,
+ 	title,body,daily.created_time as d_created_time,
+ 	daily.modified_time,category_id,user_id,
+ 	user_name,password,user_login.created_time as user_created_time,role_id
+ 	from 
+ 	daily left outer join user_login  ON  daily.`user_id`=user_login.`id`
+ 	where user_id=#{id}
+ 	</select> 
+ 	<select id="getDailyByUserId" parameterType="int" resultMap="dailyResultMap">
+ 	SELECT daily.id AS d_id,
+ 	title,body,daily.created_time AS d_created_time,
+ 	daily.modified_time,category_id,user_id,
+ 	user_name,PASSWORD,user_login.created_time AS user_created_time,role_id
+ 	FROM 
+ 	daily LEFT OUTER JOIN user_login  ON  daily.`user_id`=user_login.`id`
+ 	WHERE daily.`id`=#{id}
+ 	</select>   
+ 	<select id="findAllDaily" resultMap="dailyResultMap">
+ 	select daily.id as d_id,
+ 	title,body,daily.created_time as d_created_time,
+ 	daily.modified_time,category_id,user_id,
+ 	user_name,password,user_login.created_time as user_created_time,role_id
+ 	from 
+ 	daily left outer join user_login  ON  daily.`user_id`=user_login.`id`
+ 	</select>    
+ 	<select id="findRecentDaily" resultMap="dailyResultMap">
+ 	SELECT daily.id AS d_id,
+ 	title,body,daily.created_time AS d_created_time,
+ 	daily.modified_time,category_id,user_id,
+ 	user_name,PASSWORD,user_login.created_time AS user_created_time,role_id
+ 	FROM 
+ 	daily LEFT OUTER JOIN user_login  ON  daily.`user_id`=user_login.`id` ORDER BY d_created_time DESC  LIMIT 5
+ 	</select> 
+ 	<select id="findUserRecentDaily" parameterType="int" resultMap="dailyResultMap">
+ 	SELECT daily.id AS d_id,
+ 	title,body,daily.created_time AS d_created_time,
+ 	daily.modified_time,category_id,user_id,
+ 	user_name,PASSWORD,user_login.created_time AS user_created_time,role_id
+ 	FROM 
+ 	daily LEFT OUTER JOIN user_login  ON  daily.`user_id`=user_login.`id` where user_id=#{id} ORDER BY d_created_time DESC  LIMIT 5
+ 	</select> 
+ 	<select id="getUserArchivesDate" parameterType="int" resultType="java.util.HashMap">
+ 	SELECT COUNT(*) AS count, DATE_FORMAT( created_time, '%Y-%m') AS created_time FROM `daily`  where user_id =#{id} GROUP BY DATE_FORMAT( created_time, '%Y-%m')  ORDER BY created_time DESC	
+	</select> 
+	<select id="getUserCategoryList" parameterType="int" resultType="java.util.HashMap">
+		SELECT id,category_name FROM `user_category` WHERE user_login_id = #{id}
+	</select> 
+ 	<select id="getCategoryList" resultType="java.util.HashMap">
+		SELECT id,category_name FROM `category`
+	</select> 
+</mapper>
