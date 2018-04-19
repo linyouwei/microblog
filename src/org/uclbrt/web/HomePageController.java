@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
 import org.uclbrt.entity.UserDetail;
@@ -98,11 +100,47 @@ public class HomePageController implements SystemConstant {
 		return "../jsp/topic/setting";	
 	}
 	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.GET)
-	public String publishEdit(ModelMap map,HttpSession session) {
+	public String publishEditIndex(ModelMap map,HttpSession session) {
 		//获取用户基本信息
 		UserLogin user = (UserLogin) session.getAttribute("user");
 		if(!EmptyUtil.isNullOrEmpty(user)){
 			//查询博客分类
+			List<Map> categoryList = homePageService.getCategoryList();
+			
+			//查询博客个人分类
+			List<Map> existUserCategory = homePageService.getUserCategoryList(user.getId());
+			
+			map.put("categoryList",categoryList);
+			map.put("existUserCategory",existUserCategory);
+			return "../jsp/topic/publishEdit";	
+		}
+		return "../jsp/user/login";	
+	}
+	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.POST)
+	public String addDaily(@RequestBody String title,
+			@RequestBody String content,
+			@RequestBody List<String> tagsArr,
+			@RequestBody List<String> userCategoryList,
+			@RequestBody String existUserCategoryList,
+			@RequestBody String category,
+			
+			ModelMap map,HttpSession session) {
+		//获取用户基本信息
+		UserLogin user = (UserLogin) session.getAttribute("user");
+		if(!EmptyUtil.isNullOrEmpty(user)){
+			System.out.println(title);
+			System.out.println(content);
+			for(int i=0;i<tagsArr.size();i++){
+				System.out.println(tagsArr.get(i));
+			}
+			
+			//获取文章标签
+			//获取新增的个人分类，若存在，则不存储
+			
+			//获取已存在的个人分类
+			
+			//获取勾选博客分类
+			
 			List<Map> categoryList = homePageService.getCategoryList();
 			
 			//查询博客个人分类
