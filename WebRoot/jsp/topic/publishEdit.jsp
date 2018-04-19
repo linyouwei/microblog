@@ -53,21 +53,29 @@
                         <button id="addCategory">添加新分类</button>
                     </div>
                     <div class="div-clear-float"></div>
+                    <c:forEach items="${requestScope.existUserCategory}" var="u">
+	                     <input type="checkbox" value="${u.id}" name="existUserCategory">
+	                    <span>${u.category_name }</span>
+                    </c:forEach>
+                   
+                    <!--
                     {% if existUserCategory %}
                         {% for category in existUserCategory %}
                         <input type="checkbox" value="{{category.id}}" name="existUserCategory">
                         <span>{{category.name}}</span>
                         {% endfor %}
                     {% endif %}
+               		 -->
+                
                 </div>
                 <div class="form-group row form-control-sm">
                     <label class="labTitle col-form-label">博客分类：</label>
                     <div style="display: inline-block">
                         <select  id="blogCategory" name="blogCategory">'
                             <option value="0">选择分类</option>
-                            {% for c in categoryList%}
-                            <option value="{{c.id}}" name="category">{{c.name}}</option>
-                            {% endfor%}
+                            <c:forEach items="${requestScope.categoryList}" var="u">
+                                 <option value="${u.id }" name="category">${u.category_name}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>

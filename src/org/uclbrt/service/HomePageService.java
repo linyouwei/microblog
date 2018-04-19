@@ -48,6 +48,9 @@ public class HomePageService implements SystemConstant {
 	public List<Map> getUserCategoryList(int id ) {
 		HashMap<String,String> map = new HashMap<String,String>();
 		List<Map> list=  dailyMapper.getUserCategoryList(id);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i));
+		}
 		return  list;
 	}
 	public List<Map> getCategoryList() {

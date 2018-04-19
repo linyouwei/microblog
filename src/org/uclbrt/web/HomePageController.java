@@ -103,11 +103,13 @@ public class HomePageController implements SystemConstant {
 		UserLogin user = (UserLogin) session.getAttribute("user");
 		if(!EmptyUtil.isNullOrEmpty(user)){
 			//查询博客分类
+			List<Map> categoryList = homePageService.getCategoryList();
 			
-			//查询个人分类
+			//查询博客个人分类
+			List<Map> existUserCategory = homePageService.getUserCategoryList(user.getId());
 			
-			
-
+			map.put("categoryList",categoryList);
+			map.put("existUserCategory",existUserCategory);
 			return "../jsp/topic/publishEdit";	
 		}
 		return "../jsp/user/login";	

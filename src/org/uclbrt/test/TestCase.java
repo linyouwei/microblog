@@ -73,23 +73,23 @@ public class TestCase {
 //		System.out.println(list);
 //		
 //	}
-	@Test
-	public void testDao() {
-		String conf = "sqlMapConfig.xml";
-		Reader reader;
-		try {
-			reader = Resources.getResourceAsReader(conf);
-			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
-			SqlSession session = sqlSessionFactory.openSession();
-			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
-			UserDetail list = mapper.findDetailByUserId(1);
-			System.out.println(list.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-		
-	}
+//	@Test
+//	public void testDao() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
+//			UserDetail list = mapper.findDetailByUserId(1);
+//			System.out.println(list.toString());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
 //	@Test
 //	public void testDao1() {
 //		String conf = "sqlMapConfig.xml";
@@ -109,6 +109,26 @@ public class TestCase {
 //		}  
 //		
 //	}
+	@Test
+	public void testDao() {
+		String conf = "sqlMapConfig.xml";
+		Reader reader;
+		try {
+			reader = Resources.getResourceAsReader(conf);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+			SqlSession session = sqlSessionFactory.openSession();
+			DailyMapper mapper = session.getMapper(DailyMapper.class);
+			List<Map> list = mapper.getUserCategoryList(1);
+			for(int i=0;i<list.size();i++){
+				System.out.println(list.get(i).get("id"));
+			}
+			System.out.println(list.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		
+	}
 
 
 

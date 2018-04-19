@@ -5,7 +5,7 @@ create table `daily`(
   `body` varchar(300) not null  comment '内容',
   `created_time` datetime not null ,
   `modified_time` datetime  ,
-  `category_id` int(5) not null   comment '分类',
+  `category_id` int(5) not null   comment '系统分类',
   `user_id` varchar(50) not null comment '作者',
   `click` int(10) not null default 0,
   primary key (`id`)
