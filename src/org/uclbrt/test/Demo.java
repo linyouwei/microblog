@@ -7,13 +7,14 @@ import java.util.Map;
 
 import org.uclbrt.util.EmptyUtil;
 
-public class TestDemo {
+public class Demo {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		EmptyUtil.isNullOrEmpty("123");
+		System.out.println(123);
 	}
 
 }

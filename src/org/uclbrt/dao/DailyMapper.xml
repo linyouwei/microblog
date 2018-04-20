@@ -76,4 +76,23 @@
  	<select id="getCategoryList" resultType="java.util.HashMap">
 		SELECT id,category_name FROM `category`
 	</select> 
+	<select id="findUserCategoryByCategoryName" resultType="java.util.HashMap">
+		SELECT * FROM  `user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
+	</select> 
+	<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" >
+		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+		VALUE(#{id},#{category_name},#{is_delete})
+	</insert>
+	<insert id="addUserDailyDetail" >
+		INSERT INTO `user_daily_details`(daily_id,user_category_id)
+		VALUE(#{daily_id},#{user_category_id})
+	</insert>
+	<insert id="addDaily" parameterType="org.uclbrt.entity.Daily" >
+		INSERT INTO `daily`(`title`,`body`,`created_time`,`modified_time`,`category_id`,`user_id` ,`click`)
+		VALUES (#{title},#{body},#{created_time},#{modified_time},#{category_id},#{user_id},#{click})
+	</insert>
+	<insert id="addDailyTag"  >
+		INSERT INTO `user_daily_tags`(user_login_id,daily_id,name)
+		VALUE(#{userId},#{dailyId},#{name})
+	</insert>
 </mapper>
