@@ -81,7 +81,7 @@
 	</select> 
 	<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" >
 		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
-		VALUE(#{id},#{category_name},#{is_delete})
+		VALUE(#{userInfo.id},#{categoryName},#{isDelete})
 	</insert>
 	<insert id="addUserDailyDetail" >
 		INSERT INTO `user_daily_details`(daily_id,user_category_id)

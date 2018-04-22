@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
+import org.uclbrt.entity.UserCategory;
 import org.uclbrt.entity.UserDetail;
 import org.uclbrt.entity.UserLogin;
 import org.uclbrt.service.HomePageService;
@@ -120,7 +121,7 @@ public class HomePageController implements SystemConstant {
 	public String addDaily(@RequestBody String title,
 			@RequestBody String content,
 			@RequestBody List<String> tagsArr,
-			@RequestBody List<String> userCategoryList,
+			@RequestBody List<UserCategory> userCategoryList,
 			@RequestBody String existUserCategoryList,
 			@RequestBody String category,
 			
@@ -136,6 +137,17 @@ public class HomePageController implements SystemConstant {
 			
 			//获取文章标签
 			//获取新增的个人分类，若存在，则不存储
+			for(int i=0;i<userCategoryList.size();i++){
+				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryList.get(i), user.getId());
+				if(userCategory!=null&&userCategory.size()!=0){
+					//不存储
+				}else{
+					//存储该分类
+					UserCategory u_Category = userCategoryList.get(i); 
+					UserLogin userLogin = new UserLogin();
+					int a = homePageService.addUserCategory(u_Category);
+				}
+			}
 			
 			//获取已存在的个人分类
 			

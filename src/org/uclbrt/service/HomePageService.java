@@ -6,12 +6,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.uclbrt.dao.CommentMapper;
 import org.uclbrt.dao.DailyMapper;
 import org.uclbrt.dao.UserDetailMapper;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
+import org.uclbrt.entity.UserCategory;
 import org.uclbrt.entity.UserDetail;
 import org.uclbrt.util.SystemConstant;
 
@@ -73,5 +75,13 @@ public class HomePageService implements SystemConstant {
 	public UserDetail findDetailByUserId(int userId) {
 		UserDetail userDetail=  userDetailMapper.findDetailByUserId(userId);
 		return  userDetail;
+	}
+	public List<Map> findUserCategoryByCategoryName(String category_name,int user_login_id	) {
+		List<Map>  list=  dailyMapper.findUserCategoryByCategoryName(category_name, user_login_id);
+		return  list;
+	}
+	public int  addUserCategory(UserCategory userCategory) {
+		int id =  dailyMapper.addUserCategory(userCategory);
+		return id;
 	}
 }

@@ -26,6 +26,7 @@ import org.uclbrt.dao.UserDetailMapper;
 import org.uclbrt.dao.UserLoginMapper;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
+import org.uclbrt.entity.UserCategory;
 import org.uclbrt.entity.UserDetail;
 import org.uclbrt.entity.UserLogin;
 import org.uclbrt.service.LoginService;
@@ -135,17 +136,19 @@ public class TestCase {
 	public void testDemo() {
 		String conf = "sqlMapConfig.xml";
 		Reader reader;
-		System.out.println(123);
 		try {
 			reader = Resources.getResourceAsReader(conf);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 			SqlSession session = sqlSessionFactory.openSession();
 			DailyMapper mapper = session.getMapper(DailyMapper.class);
-			List<Map> list = mapper.findUserCategoryByCategoryName("计算机",1);
-			for(int i=0;i<list.size();i++){
-				System.out.println(list.get(i));
-			}
-			System.out.println(list.toString());
+			UserCategory userCategory = new UserCategory();
+			UserLogin userLogin = new UserLogin();
+			userLogin.setId(5);
+			userCategory.setCategoryName("3333");
+			userCategory.setUserInfo(userLogin);
+			int a = mapper.addUserCategory(userCategory);
+			System.out.println(a);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
