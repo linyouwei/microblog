@@ -138,7 +138,7 @@ public class HomePageController implements SystemConstant {
 			//获取文章标签
 			//获取新增的个人分类，若存在，则不存储
 			for(int i=0;i<userCategoryList.size();i++){
-				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryList.get(i), user.getId());
+				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryList.get(i).getCategoryName(), user.getId());
 				if(userCategory!=null&&userCategory.size()!=0){
 					//不存储
 				}else{
