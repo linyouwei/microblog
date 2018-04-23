@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.uclbrt.dao.UserCategoryMapper">
+ 	<parameterMap type="org.uclbrt.entity.UserCategory" id="parameterUserCategoryMap">
+		<parameter property="id"/>
+		<parameter property="userId"/>
+		<parameter property="categoryName"/>
+		<parameter property="isDelete"/>
+	</parameterMap>
+	<insert id="addUserCategory" parameterMap="parameterUserCategoryMap">
+		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+		VALUE(#{userId},#{categoryName},#{isDelete})
+	</insert>
+	<resultMap type="org.uclbrt.entity.UserCategory" id="resultUserCategory">
+		<result property="userId" column="user_login_id" />
+		<result property="isDelete" column="is_delete" />
+		<result property="categoryName" column="category_name" />
+		<collection property="dailyList" column="id"
+			select="org.uclbrt.dao.UserCategoryMapper.getUserCategoryByDailyId" />
+	</resultMap>
+	<select id="getUserCategory" resultMap="resultUserCategory" parameterType="int">
+		select * 
+		from `user_category`
+		where id=#{id}
+	</select>
+	<!--
+		SELECT d.`id` d_id,d.*,ud.*
+		FROM `daily` d,`user_daily_details` ud
+		WHERE d.`id`=ud.`daily_id` AND ud.`user_category_id`=
+		(SELECT id FROM `user_category` WHERE id=1)
+	
+	-->
+	<resultMap type="org.uclbrt.entity.Daily" id="resultUserCategoryDailyMap">
+		    <id property="id" column="d_id" />  
+		    <id property="title" column="title" />  
+		    <id property="body" column="body" />  
+		    <id property="createdTime" column="created_time" />  
+		    <id property="modifiedTime" column="modified_time" />
+		    <id property="categoryId" column="category_id" />
+		    <id property="click" column="click" />    
+	</resultMap>
+	<select id="getUserCategoryByDailyId" resultMap="resultUserCategoryDailyMap" parameterType="int">
+		SELECT d.`id` d_id,d.*,ud.*
+		FROM `daily` d,`user_daily_details` ud
+		WHERE d.`id`=ud.`daily_id` AND ud.`user_category_id`=#{id}
+	</select>
+</mapper>

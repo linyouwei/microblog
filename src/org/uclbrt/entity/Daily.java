@@ -3,6 +3,7 @@ package org.uclbrt.entity;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Daily {
 	private int id;
@@ -13,6 +14,7 @@ public class Daily {
 	private int categoryId;
 	private int click;
 	private UserLogin userInfo;
+	private List<UserCategory> userList;
 	public int getId() {
 		return id;
 	}
@@ -64,6 +66,12 @@ public class Daily {
 	}
 	public void setUserInfo(UserLogin userInfo) {
 		this.userInfo = userInfo;
+	}
+	public List<UserCategory> getUserList() {
+		return userList;
+	}
+	public void setUserList(List<UserCategory> userList) {
+		this.userList = userList;
 	}
 	
 }

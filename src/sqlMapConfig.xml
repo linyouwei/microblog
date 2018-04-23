@@ -23,5 +23,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
      <mapper resource="org/uclbrt/dao/UserLoginMapper.xml" />  
      <mapper resource="org/uclbrt/dao/CommentMapper.xml" />  
      <mapper resource="org/uclbrt/dao/UserDetailMapper.xml" />  
+     <mapper resource="org/uclbrt/dao/UserCategoryMapper.xml" />  
     </mappers>  
 </configuration>  

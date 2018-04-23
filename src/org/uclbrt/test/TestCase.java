@@ -22,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.uclbrt.dao.CommentMapper;
 import org.uclbrt.dao.DailyMapper;
+import org.uclbrt.dao.UserCategoryMapper;
 import org.uclbrt.dao.UserDetailMapper;
 import org.uclbrt.dao.UserLoginMapper;
 import org.uclbrt.entity.Comment;
@@ -132,6 +133,31 @@ public class TestCase {
 //	}
 //	
 	
+//	@Test
+//	public void testDemo() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			DailyMapper mapper = session.getMapper(DailyMapper.class);
+//			UserCategory userCategory = new UserCategory();
+//			UserLogin userLogin = new UserLogin();
+//			userLogin.setId(5);
+//			userCategory.setCategoryName("3333");
+//			userCategory.setUserInfo(userLogin);
+//			userCategory.setIsDelete(1);
+//			int a = mapper.addUserCategory(userCategory);
+//			session.commit();
+//			System.out.println(a);
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
 	@Test
 	public void testDemo() {
 		String conf = "sqlMapConfig.xml";
@@ -140,14 +166,18 @@ public class TestCase {
 			reader = Resources.getResourceAsReader(conf);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 			SqlSession session = sqlSessionFactory.openSession();
-			DailyMapper mapper = session.getMapper(DailyMapper.class);
+			UserCategoryMapper mapper = session.getMapper(UserCategoryMapper.class);
 			UserCategory userCategory = new UserCategory();
-			UserLogin userLogin = new UserLogin();
-			userLogin.setId(5);
-			userCategory.setCategoryName("3333");
-			userCategory.setUserInfo(userLogin);
-			int a = mapper.addUserCategory(userCategory);
-			System.out.println(a);
+		
+			List<UserCategory> a = mapper.getUserCategory(1);
+			for(int i=0;i<a.size();i++){
+				List<Daily> list = a.get(i).getDailyList();
+				for(int j=0;j<list.size();j++){
+					System.out.println(list.get(0).getBody());
+					
+				}
+				
+			}
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

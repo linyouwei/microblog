@@ -3,23 +3,25 @@ package org.uclbrt.entity;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class UserCategory {
 	private int id;
-	private UserLogin userInfo;
+	private int  userId;
 	private String categoryName;
 	private int isDelete;
+	private List<Daily> dailyList;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public UserLogin getUserInfo() {
-		return userInfo;
+	public int getUserId() {
+		return userId;
 	}
-	public void setUserInfo(UserLogin userInfo) {
-		this.userInfo = userInfo;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getCategoryName() {
 		return categoryName;
@@ -33,6 +35,14 @@ public class UserCategory {
 	public void setIsDelete(int isDelete) {
 		this.isDelete = isDelete;
 	}
+	public List<Daily> getDailyList() {
+		return dailyList;
+	}
+	public void setDailyList(List<Daily> dailyList) {
+		this.dailyList = dailyList;
+	}
+	
+
 	
 	
 }

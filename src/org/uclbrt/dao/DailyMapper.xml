@@ -6,25 +6,7 @@
 		select * from `DAILY` where user_id= #{userId}; ;
 	</select>
 -->
-	<!-- 多对一查询  -->
-    <resultMap id="dailyResultMap" type="org.uclbrt.entity.Daily"  >
-    <id property="id" column="d_id" />  
-    <id property="title" column="title" />  
-    <id property="body" column="body" />  
-    <id property="createdTime" column="d_created_time" />  
-    <id property="modifiedTime" column="modified_time" />
-    <id property="categoryId" column="category_id" />  
-    <id property="click" column="click" />  
-	    <association property="userInfo" resultMap="userResult">     
-	    </association>  
-	</resultMap>
-	 <resultMap id="userResult" type="org.uclbrt.entity.UserLogin">
-	  			<id property="id" column="u_id" />  
-	            <result property="userName" column="user_name" />  
-	            <result property="password" column="password" />  
-	            <result property="createdTime" column="user_created_time" />  
-	            <result property="roleId" column="role_id" />
-	 </resultMap>      
+	   
     <select id="getDailyListByUserId" parameterType="int" resultMap="dailyResultMap">
  	select daily.id as d_id,
  	title,body,daily.created_time as d_created_time,
@@ -79,14 +61,27 @@
 	<select id="findUserCategoryByCategoryName" resultType="java.util.HashMap">
 		SELECT * FROM  `user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
 	</select> 
-	<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" >
-		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
-		VALUE(#{userInfo.id},#{categoryName},#{isDelete})
+	
+	<!-- 插入daily -->
+	<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" useGeneratedKeys="true" keyProperty="id">
+			INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+			VALUE(#{userInfo.id},#{categoryName},#{isDelete})
 	</insert>
 	<insert id="addUserDailyDetail" >
 		INSERT INTO `user_daily_details`(daily_id,user_category_id)
 		VALUE(#{daily_id},#{user_category_id})
 	</insert>
+	<!--<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" >
+			INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+			VALUE(#{userInfo.id},#{categoryName},#{isDelete})
+	</insert>
+	-->
+	<!--<insert id="addUserDailyDetail" >
+		INSERT INTO `user_daily_details`(daily_id,user_category_id)
+		VALUE(#{daily_id},#{user_category_id})
+	</insert>
+	-->
+	
 	<insert id="addDaily" parameterType="org.uclbrt.entity.Daily" >
 		INSERT INTO `daily`(`title`,`body`,`created_time`,`modified_time`,`category_id`,`user_id` ,`click`)
 		VALUES (#{title},#{body},#{created_time},#{modified_time},#{category_id},#{user_id},#{click})
@@ -95,4 +90,29 @@
 		INSERT INTO `user_daily_tags`(user_login_id,daily_id,name)
 		VALUE(#{userId},#{dailyId},#{name})
 	</insert>
+	
+	<!-- 多对一查询  -->
+    <resultMap id="dailyResultMap" type="org.uclbrt.entity.Daily"  >
+    <id property="id" column="d_id" />  
+    <id property="title" column="title" />  
+    <id property="body" column="body" />  
+    <id property="createdTime" column="d_created_time" />  
+    <id property="modifiedTime" column="modified_time" />
+    <id property="categoryId" column="category_id" />  
+    <id property="click" column="click" />  
+	    <association property="userInfo" resultMap="userResult">     
+	    </association>
+	    <!--  
+	    <collection property="userList" ofType="org.uclbrt.entity.UserCategory">
+            <id column="uid" property="uid"/>
+        	<result column="uname" property="uname"/>
+        </collection>
+		--></resultMap>
+	 <resultMap id="userResult" type="org.uclbrt.entity.UserLogin">
+	  			<id property="id" column="u_id" />  
+	            <result property="userName" column="user_name" />  
+	            <result property="password" column="password" />  
+	            <result property="createdTime" column="user_created_time" />  
+	            <result property="roleId" column="role_id" />
+	 </resultMap>   
 </mapper>
