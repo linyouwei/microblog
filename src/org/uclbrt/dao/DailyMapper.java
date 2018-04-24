@@ -19,11 +19,11 @@ public interface DailyMapper {
 			@Param("user_login_id") int user_login_id	
 	);
 	int addUserCategory(UserCategory userCategory);
-	void addUserDailyDetail(@Param("daily_id") int daily_id ,
+	int addUserDailyDetail(@Param("daily_id") int daily_id ,
 			@Param("user_category_id") int user_category_id
 			);
-	void addDaily(Daily daily);
-	void addDailyTag(@Param("userId")int userId,
+	int addDaily(Daily daily);
+	int addDailyTag(@Param("userId")int userId,
 			@Param("dailyId")int dailyId,
 			@Param("name") String name);
 	

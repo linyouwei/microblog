@@ -1,5 +1,6 @@
 package org.uclbrt.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -117,53 +118,65 @@ public class HomePageController implements SystemConstant {
 		}
 		return "../jsp/user/login";	
 	}
-	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.POST)
-	public String addDaily(@RequestBody String title,
-			@RequestBody String content,
-			@RequestBody List<String> tagsArr,
-			@RequestBody List<UserCategory> userCategoryList,
-			@RequestBody String existUserCategoryList,
-			@RequestBody String category,
-			
-			ModelMap map,HttpSession session) {
-		//获取用户基本信息
-		UserLogin user = (UserLogin) session.getAttribute("user");
-		if(!EmptyUtil.isNullOrEmpty(user)){
-			System.out.println(title);
-			System.out.println(content);
-			for(int i=0;i<tagsArr.size();i++){
-				System.out.println(tagsArr.get(i));
-			}
-			
-			//获取文章标签
-			//获取新增的个人分类，若存在，则不存储
-			for(int i=0;i<userCategoryList.size();i++){
-				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryList.get(i).getCategoryName(), user.getId());
-				if(userCategory!=null&&userCategory.size()!=0){
-					//不存储
-				}else{
-					//存储该分类
-					UserCategory u_Category = userCategoryList.get(i); 
-					UserLogin userLogin = new UserLogin();
-					int a = homePageService.addUserCategory(u_Category);
-				}
-			}
-			
-			//获取已存在的个人分类
-			
-			//获取勾选博客分类
-			
-			List<Map> categoryList = homePageService.getCategoryList();
-			
-			//查询博客个人分类
-			List<Map> existUserCategory = homePageService.getUserCategoryList(user.getId());
-			
-			map.put("categoryList",categoryList);
-			map.put("existUserCategory",existUserCategory);
-			return "../jsp/topic/publishEdit";	
-		}
-		return "../jsp/user/login";	
+	//@RequestBody String title,@RequestBody String content,@RequestBody List<String> tagsArr,@RequestBody List<UserCategory> userCategoryList,@RequestBody List<String> existUserCategoryList,@RequestBody String category
+	@RequestMapping(value ="/publish.form", method = RequestMethod.POST)
+	public String addDaily(@RequestBody  List<Map<String, String>>  tagsArr,HttpSession session) {
+		for(int i=0;i<tagsArr.size();i++){
+			System.out.println(tagsArr.get(i));
+		}	
+//		System.out.println(title);
+		return "../jsp/topic/publishEdit";	
 	}
+		//获取用户基本信息
+//		UserLogin user = (UserLogin) session.getAttribute("user");
+//		if(!EmptyUtil.isNullOrEmpty(user)){
+//			System.out.println(title);
+//			System.out.println(content);
+//			//插入daily
+//			Daily daily = new Daily();
+//			daily.setBody(content);
+//			daily.setCategoryId(Integer.parseInt(category));
+//			daily.setClick(0);
+//			Date createdTime = new Date(); 
+//			daily.setCreatedTime(createdTime);
+//			daily.setModifiedTime(createdTime);
+//			daily.setTitle(title);
+//			homePageService.addDaily(daily);
+//			for(int i=0;i<tagsArr.size();i++){
+//				//插入文章标签
+//				System.out.println("daily:"+daily.toString());
+//				System.out.println("tagsArr:"+tagsArr.get(i));
+//				homePageService.addDailyTag(user.getId(),daily.getId(),tagsArr.get(i));
+//				
+//			}
+//			
+//			//获取新增的个人分类，若存在，则不存储
+//			for(int i=0;i<userCategoryList.size();i++){
+//				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryList.get(i).getCategoryName(), user.getId());
+//				if(userCategory!=null&&userCategory.size()!=0){
+//					//不存储
+//				}else{
+//					//存储该分类
+//					UserCategory u_Category = userCategoryList.get(i); 
+//					UserLogin userLogin = new UserLogin();
+//					int a = homePageService.addUserCategory(u_Category);
+//					if(a==1){
+//						System.out.println("插入成功");
+//						//插入`user_daily_details`
+//						homePageService.addUserDailyDetail(daily.getId(),u_Category.getId());
+//					}else{
+//						System.out.println("插入失败");
+//					}
+//				}
+//			}
+//			
+//			//获取已存在的个人分类,并存储user_daily_details表中
+//			for(int i=0;i<existUserCategoryList.size();i++){
+//				homePageService.addUserDailyDetail(daily.getId(),Integer.parseInt(existUserCategoryList.get(i)));	
+//			}
+
+			//return "../jsp/topic/publishEdit";	
+
 
 	
 	

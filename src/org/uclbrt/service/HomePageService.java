@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.uclbrt.dao.CommentMapper;
 import org.uclbrt.dao.DailyMapper;
+import org.uclbrt.dao.UserCategoryMapper;
 import org.uclbrt.dao.UserDetailMapper;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
@@ -25,6 +26,9 @@ public class HomePageService implements SystemConstant {
 	private CommentMapper commentMapper;
 	@Resource
 	private UserDetailMapper userDetailMapper;
+	@Resource
+	private UserCategoryMapper userCategoryMapper;
+
 
 	public List<Daily> getDailyListByUserId(int userId) {
 		List<Daily> list=  dailyMapper.getDailyListByUserId(userId);
@@ -77,11 +81,23 @@ public class HomePageService implements SystemConstant {
 		return  userDetail;
 	}
 	public List<Map> findUserCategoryByCategoryName(String category_name,int user_login_id	) {
-		List<Map>  list=  dailyMapper.findUserCategoryByCategoryName(category_name, user_login_id);
+		List<Map>  list=  userCategoryMapper.findUserCategoryByCategoryName(category_name, user_login_id);
 		return  list;
 	}
 	public int  addUserCategory(UserCategory userCategory) {
-		int id =  dailyMapper.addUserCategory(userCategory);
+		int id =  userCategoryMapper.addUserCategory(userCategory);
+		return id;
+	}
+	public int  addDaily(Daily daily) {
+		int id =  dailyMapper.addDaily(daily);
+		return id;
+	}
+	public int addDailyTag(int userId,int dailyId,String name){
+		int id =  dailyMapper.addDailyTag(userId,dailyId,name);
+		return id;
+	}
+	public int addUserDailyDetail(int dailyId,int userCategoryId){
+		int id =  dailyMapper.addUserDailyDetail(dailyId,userCategoryId);
 		return id;
 	}
 }

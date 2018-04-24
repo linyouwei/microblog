@@ -88,22 +88,54 @@ function publish(){
 	        console.log(existUserCategoryArr);
 
 
-	        $.post("/microblog/homePage/publishEdit.form", {
-	            'title':$("#txtTitle").val(),
-	            'content': editor.html(),
-	            'tagsArr':tagsArr,
-	            'userCategoryList':userCategoryArr,
-	            'existUserCategoryList':existUserCategoryArr,
-	            'category':category,
-	        }, function (data) {
-	            console.log(data)
-	            	/*
-	                if(data.status==200){
-	                    window.location.href='/myblog/publishSuccess'
-	                }
-	                */
-	           
-	        })
+//	        $.post("/microblog/homePage/publishEdit.form", {
+//	            'title':$("#txtTitle").val(),
+//	            'content': editor.html(),
+//	            'tagsArr':tagsArr,
+//	            'userCategoryList':userCategoryArr,
+//	            'existUserCategoryList':existUserCategoryArr,
+//	            'category':category,
+//	        }, function (data) {
+//	            console.log(data)
+//	            	/*
+//	                if(data.status==200){
+//	                    window.location.href='/myblog/publishSuccess'
+//	                }
+//	                */
+//	           
+//	        })
+//	        console.log($("#txtTitle").val());
+//	        $.post("/microblog/homePage/publish.form", {
+//	            'title':$("#txtTitle").val(),
+//	        }, function (data) {
+//	            	/*
+//	                if(data.status==200){
+//	                    window.location.href='/myblog/publishSuccess'
+//	                }
+//	                */
+//	           
+//	        })
+	        var param = {tagsArr:tagsArr};
+	        console.log(param);
+	        console.log(JSON.stringify(param));
+	        $.ajax({
+	            dataType: "JSON",
+	            contentType:'application/json;charset=UTF-8',//关键是要加上这行
+	            traditional:true,//这使json格式的字符不会被转码
+	            data: JSON.stringify(param),
+	            type: "POST", 
+	            timeout: 20000,
+	            url: "/microblog/homePage/publish.form",
+	            success : function () {
+	                alert("删除成功！");
+	            },
+	            error : function (data){
+	                alert(data.responseText);
+	            }
+	        });
+	        
+	        
+	        
 
 	    });
 }

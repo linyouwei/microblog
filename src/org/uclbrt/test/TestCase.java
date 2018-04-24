@@ -5,6 +5,7 @@ package org.uclbrt.test;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -169,15 +170,25 @@ public class TestCase {
 			UserCategoryMapper mapper = session.getMapper(UserCategoryMapper.class);
 			UserCategory userCategory = new UserCategory();
 		
-			List<UserCategory> a = mapper.getUserCategory(1);
-			for(int i=0;i<a.size();i++){
-				List<Daily> list = a.get(i).getDailyList();
-				for(int j=0;j<list.size();j++){
-					System.out.println(list.get(0).getBody());
-					
-				}
-				
-			}
+//			List<UserCategory> a = mapper.getUserCategory(1);
+//			for(int i=0;i<a.size();i++){
+//				List<Daily> list = a.get(i).getDailyList();
+//				for(int j=0;j<list.size();j++){
+//					System.out.println(list.get(j).getBody());	
+//				}
+//				
+//			}
+//			List<Map> list = mapper.findUserCategoryByCategoryName("it", 1);
+//			System.out.println(list);
+//			userCategory.setCategoryName("www");
+//			userCategory.setUserId(3);
+//			userCategory.setIsDelete(0);
+//			int a = mapper.addUserCategory(userCategory);
+//			System.out.println(a);
+//			session.commit();
+			System.out.println(userCategory.getId());
+			Date dd = new Date();
+			System.out.println(dd);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

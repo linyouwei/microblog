@@ -8,7 +8,15 @@
 		<parameter property="categoryName"/>
 		<parameter property="isDelete"/>
 	</parameterMap>
-	<insert id="addUserCategory" parameterMap="parameterUserCategoryMap">
+	<!--<insert id="addUserCategory" parameterMap="parameterUserCategoryMap">
+		<selectKey resultType="java.lang.Short" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+		VALUE(#{userId},#{categoryName},#{isDelete})
+	</insert>
+	--><!-- 或者 -->
+	<insert id="addUserCategory"  useGeneratedKeys="true" keyProperty="id" parameterMap="parameterUserCategoryMap">
 		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
 		VALUE(#{userId},#{categoryName},#{isDelete})
 	</insert>
@@ -45,4 +53,7 @@
 		FROM `daily` d,`user_daily_details` ud
 		WHERE d.`id`=ud.`daily_id` AND ud.`user_category_id`=#{id}
 	</select>
+	<select id="findUserCategoryByCategoryName" resultType="java.util.HashMap">
+		SELECT * FROM  `user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
+	</select> 
 </mapper>
