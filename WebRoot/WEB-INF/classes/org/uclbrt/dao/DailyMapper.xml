@@ -82,9 +82,9 @@
 	</insert>
 	-->
 	
-	<insert id="addDaily" parameterType="org.uclbrt.entity.Daily" >
+	<insert id="addDaily" parameterType="org.uclbrt.entity.Daily" useGeneratedKeys="true" keyProperty="id" >
 		INSERT INTO `daily`(`title`,`body`,`created_time`,`modified_time`,`category_id`,`user_id` ,`click`)
-		VALUES (#{title},#{body},#{created_time},#{modified_time},#{category_id},#{user_id},#{click})
+		VALUES (#{title},#{body},#{createdTime},#{modifiedTime},#{categoryId},#{userInfo.id},#{click})
 	</insert>
 	<insert id="addDailyTag"  >
 		INSERT INTO `user_daily_tags`(user_login_id,daily_id,name)

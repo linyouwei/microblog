@@ -159,6 +159,43 @@ public class TestCase {
 //		}  
 //		
 //	}
+//	@Test
+//	public void testDemo() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			UserCategoryMapper mapper = session.getMapper(UserCategoryMapper.class);
+//			UserCategory userCategory = new UserCategory();
+//		
+////			List<UserCategory> a = mapper.getUserCategory(1);
+////			for(int i=0;i<a.size();i++){
+////				List<Daily> list = a.get(i).getDailyList();
+////				for(int j=0;j<list.size();j++){
+////					System.out.println(list.get(j).getBody());	
+////				}
+////				
+////			}
+////			List<Map> list = mapper.findUserCategoryByCategoryName("it", 1);
+////			System.out.println(list);
+////			userCategory.setCategoryName("www");
+////			userCategory.setUserId(3);
+////			userCategory.setIsDelete(0);
+////			int a = mapper.addUserCategory(userCategory);
+////			System.out.println(a);
+////			session.commit();
+//			System.out.println(userCategory.getId());
+//			Date dd = new Date();
+//			System.out.println(dd);
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
 	@Test
 	public void testDemo() {
 		String conf = "sqlMapConfig.xml";
@@ -167,28 +204,20 @@ public class TestCase {
 			reader = Resources.getResourceAsReader(conf);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 			SqlSession session = sqlSessionFactory.openSession();
-			UserCategoryMapper mapper = session.getMapper(UserCategoryMapper.class);
-			UserCategory userCategory = new UserCategory();
-		
-//			List<UserCategory> a = mapper.getUserCategory(1);
-//			for(int i=0;i<a.size();i++){
-//				List<Daily> list = a.get(i).getDailyList();
-//				for(int j=0;j<list.size();j++){
-//					System.out.println(list.get(j).getBody());	
-//				}
-//				
-//			}
-//			List<Map> list = mapper.findUserCategoryByCategoryName("it", 1);
-//			System.out.println(list);
-//			userCategory.setCategoryName("www");
-//			userCategory.setUserId(3);
-//			userCategory.setIsDelete(0);
-//			int a = mapper.addUserCategory(userCategory);
-//			System.out.println(a);
-//			session.commit();
-			System.out.println(userCategory.getId());
-			Date dd = new Date();
-			System.out.println(dd);
+			DailyMapper mapper = session.getMapper(DailyMapper.class);
+			Daily daily = new Daily();
+			daily.setBody("3333");
+			daily.setCategoryId(Integer.parseInt("1"));
+			daily.setClick(0);
+			Date createdTime = new Date(); 
+			daily.setCreatedTime(createdTime);
+			daily.setModifiedTime(createdTime);
+			daily.setTitle("34233423");
+			UserLogin userInfo = new UserLogin();
+			userInfo.setId(1);
+			daily.setUserInfo(userInfo);
+			mapper.addDaily(daily);
+			session.commit();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -196,7 +225,6 @@ public class TestCase {
 		}  
 		
 	}
-
 
 
 

@@ -73,5 +73,13 @@ public class Daily {
 	public void setUserList(List<UserCategory> userList) {
 		this.userList = userList;
 	}
+	@Override
+	public String toString() {
+		return "Daily [body=" + body + ", categoryId=" + categoryId
+				+ ", click=" + click + ", createdTime=" + createdTime + ", id="
+				+ id + ", modifiedTime=" + modifiedTime + ", title=" + title
+				+ ", userInfo=" + userInfo + ", userList=" + userList + "]";
+	}
+	
 	
 }

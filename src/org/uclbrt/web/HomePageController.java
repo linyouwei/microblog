@@ -119,66 +119,71 @@ public class HomePageController implements SystemConstant {
 		return "../jsp/user/login";	
 	}
 	//@RequestBody String title,@RequestBody String content,@RequestBody List<String> tagsArr,@RequestBody List<UserCategory> userCategoryList,@RequestBody List<String> existUserCategoryList,@RequestBody String category
+	//@RequestBody  Map<String, Object>  param,HttpSession session
 	@RequestMapping(value ="/publish.form", method = RequestMethod.POST)
-	public String addDaily(@RequestBody  List<Map<String, String>>  tagsArr,HttpSession session) {
-		for(int i=0;i<tagsArr.size();i++){
-			System.out.println(tagsArr.get(i));
-		}	
-//		System.out.println(title);
+	public String addDaily(@RequestBody  Map<String, Object>  param,HttpSession session) {
+		String title = (String) param.get("title");
+		String content = (String) param.get("content");
+		List<String> tagsArr = (List<String>) param.get("tagsArr");
+		List<String> userCategoryArr = (List<String>) param.get("userCategoryArr");
+		List<String> existUserCategoryArr = (List<String>) param.get("existUserCategoryArr");
+		String category = (String) param.get("category");
+		List<String> list = (List<String>) param.get("userCategoryArr");
+		UserLogin user = (UserLogin) session.getAttribute("user");
+		if(!EmptyUtil.isNullOrEmpty(user)){
+			//插入daily
+			Daily daily = new Daily();
+			daily.setBody(content);
+			daily.setCategoryId(Integer.parseInt(category));
+			daily.setClick(0);
+			Date createdTime = new Date(); 
+			daily.setCreatedTime(createdTime);
+			daily.setModifiedTime(createdTime);
+			daily.setTitle(title);
+			UserLogin userInfo = new UserLogin();
+			userInfo.setId(user.getId());
+			daily.setUserInfo(userInfo);
+			homePageService.addDaily(daily);
+			for(int i=0;i<tagsArr.size();i++){
+				//插入文章标签
+				System.out.println("daily:"+daily.toString());
+				System.out.println("tagsArr:"+tagsArr.get(i));
+				homePageService.addDailyTag(user.getId(),daily.getId(),tagsArr.get(i));
+			}
+			
+			//获取新增的个人分类，若存在，则不存储
+			for(int i=0;i<userCategoryArr.size();i++){
+				System.out.println("userCategoryArr:"+userCategoryArr.get(i));
+				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryArr.get(i), user.getId());
+				if(userCategory!=null&&userCategory.size()!=0){
+					//不存储
+				}else{
+					//存储该分类
+					UserCategory new_category = new UserCategory(); 
+					new_category.setCategoryName(userCategoryArr.get(i));
+					new_category.setIsDelete(0);
+					new_category.setUserId(user.getId());
+					UserLogin userLogin = new UserLogin();
+					int a = homePageService.addUserCategory(new_category);
+					if(a==1){
+						System.out.println("插入成功");
+						//插入`user_daily_details`
+						homePageService.addUserDailyDetail(daily.getId(),new_category.getId());
+					}else{
+						System.out.println("插入失败");
+					}
+				}
+			}
+			
+			//获取已存在的个人分类,并存储user_daily_details表中
+			for(int i=0;i<existUserCategoryArr.size();i++){
+				homePageService.addUserDailyDetail(daily.getId(),Integer.parseInt(existUserCategoryArr.get(i)));	
+			}
+
+		
+		}
+
 		return "../jsp/topic/publishEdit";	
 	}
-		//获取用户基本信息
-//		UserLogin user = (UserLogin) session.getAttribute("user");
-//		if(!EmptyUtil.isNullOrEmpty(user)){
-//			System.out.println(title);
-//			System.out.println(content);
-//			//插入daily
-//			Daily daily = new Daily();
-//			daily.setBody(content);
-//			daily.setCategoryId(Integer.parseInt(category));
-//			daily.setClick(0);
-//			Date createdTime = new Date(); 
-//			daily.setCreatedTime(createdTime);
-//			daily.setModifiedTime(createdTime);
-//			daily.setTitle(title);
-//			homePageService.addDaily(daily);
-//			for(int i=0;i<tagsArr.size();i++){
-//				//插入文章标签
-//				System.out.println("daily:"+daily.toString());
-//				System.out.println("tagsArr:"+tagsArr.get(i));
-//				homePageService.addDailyTag(user.getId(),daily.getId(),tagsArr.get(i));
-//				
-//			}
-//			
-//			//获取新增的个人分类，若存在，则不存储
-//			for(int i=0;i<userCategoryList.size();i++){
-//				List<Map> userCategory  = homePageService.findUserCategoryByCategoryName(userCategoryList.get(i).getCategoryName(), user.getId());
-//				if(userCategory!=null&&userCategory.size()!=0){
-//					//不存储
-//				}else{
-//					//存储该分类
-//					UserCategory u_Category = userCategoryList.get(i); 
-//					UserLogin userLogin = new UserLogin();
-//					int a = homePageService.addUserCategory(u_Category);
-//					if(a==1){
-//						System.out.println("插入成功");
-//						//插入`user_daily_details`
-//						homePageService.addUserDailyDetail(daily.getId(),u_Category.getId());
-//					}else{
-//						System.out.println("插入失败");
-//					}
-//				}
-//			}
-//			
-//			//获取已存在的个人分类,并存储user_daily_details表中
-//			for(int i=0;i<existUserCategoryList.size();i++){
-//				homePageService.addUserDailyDetail(daily.getId(),Integer.parseInt(existUserCategoryList.get(i)));	
-//			}
-
-			//return "../jsp/topic/publishEdit";	
-
-
-	
-	
 
 }

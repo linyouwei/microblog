@@ -79,6 +79,7 @@ function publish(){
 	        for (var i = 0; i < userCategoryList.length; i++) {
 	            userCategoryArr.push(userCategoryList.eq(i).val());
 	        }
+	        console.log(userCategoryArr);
 	        // 只需传category_id
 	        var existUserCategoryList = $("input[name='existUserCategory']:checked");
 	        var existUserCategoryArr = [];
@@ -115,7 +116,12 @@ function publish(){
 //	                */
 //	           
 //	        })
-	        var param = {tagsArr:tagsArr};
+	        var param = {"title":$("#txtTitle").val(),
+	        			"content":editor.html(),
+	        			"tagsArr":tagsArr,
+	        			"userCategoryArr":userCategoryArr,
+	        			"existUserCategoryArr":existUserCategoryArr,
+	        			"category":category};
 	        console.log(param);
 	        console.log(JSON.stringify(param));
 	        $.ajax({
