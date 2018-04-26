@@ -1,6 +1,7 @@
 package org.uclbrt.web;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
 import org.uclbrt.entity.UserCategory;
@@ -121,7 +123,8 @@ public class HomePageController implements SystemConstant {
 	//@RequestBody String title,@RequestBody String content,@RequestBody List<String> tagsArr,@RequestBody List<UserCategory> userCategoryList,@RequestBody List<String> existUserCategoryList,@RequestBody String category
 	//@RequestBody  Map<String, Object>  param,HttpSession session
 	@RequestMapping(value ="/publish.form", method = RequestMethod.POST)
-	public String addDaily(@RequestBody  Map<String, Object>  param,HttpSession session) {
+	@ResponseBody
+	public Result addDaily(@RequestBody  Map<String, Object>  param,HttpSession session) {
 		String title = (String) param.get("title");
 		String content = (String) param.get("content");
 		List<String> tagsArr = (List<String>) param.get("tagsArr");
@@ -178,12 +181,15 @@ public class HomePageController implements SystemConstant {
 			//获取已存在的个人分类,并存储user_daily_details表中
 			for(int i=0;i<existUserCategoryArr.size();i++){
 				homePageService.addUserDailyDetail(daily.getId(),Integer.parseInt(existUserCategoryArr.get(i)));	
-			}
-
-		
+			}		
 		}
-
-		return "../jsp/topic/publishEdit";	
+		Map<String,Object> map = new HashMap(); 
+		map.put("status", 200);
+		return new Result(map);
+	}
+	@RequestMapping(value ="/publishSuccess.form", method = RequestMethod.GET)
+	public String publishSuccess(ModelMap map,HttpSession session) {
+		return "../jsp/topic/publish-success";	
 	}
 
 }

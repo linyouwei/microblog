@@ -87,9 +87,11 @@ function publish(){
 	            existUserCategoryArr.push(existUserCategoryList.eq(i).val());
 	        }
 	        console.log(existUserCategoryArr);
+	        
+	        //该形式不行
 
-
-//	        $.post("/microblog/homePage/publishEdit.form", {
+//
+//	        $.post("/microblog/homePage/publish.form", {
 //	            'title':$("#txtTitle").val(),
 //	            'content': editor.html(),
 //	            'tagsArr':tagsArr,
@@ -105,25 +107,13 @@ function publish(){
 //	                */
 //	           
 //	        })
-//	        console.log($("#txtTitle").val());
-//	        $.post("/microblog/homePage/publish.form", {
-//	            'title':$("#txtTitle").val(),
-//	        }, function (data) {
-//	            	/*
-//	                if(data.status==200){
-//	                    window.location.href='/myblog/publishSuccess'
-//	                }
-//	                */
-//	           
-//	        })
+        
 	        var param = {"title":$("#txtTitle").val(),
 	        			"content":editor.html(),
 	        			"tagsArr":tagsArr,
 	        			"userCategoryArr":userCategoryArr,
 	        			"existUserCategoryArr":existUserCategoryArr,
 	        			"category":category};
-	        console.log(param);
-	        console.log(JSON.stringify(param));
 	        $.ajax({
 	            dataType: "JSON",
 	            contentType:'application/json;charset=UTF-8',//关键是要加上这行
@@ -132,16 +122,14 @@ function publish(){
 	            type: "POST", 
 	            timeout: 20000,
 	            url: "/microblog/homePage/publish.form",
-	            success : function () {
-	                alert("删除成功！");
+	            success : function (data) {
+	        		console.log(data);
+	        		if(data.data.status==200){
+	        			 window.location.href='/microblog/homePage/publishSuccess.form';
+	        		}          
 	            },
-	            error : function (data){
-	                alert(data.responseText);
+	            error : function (data){    
 	            }
 	        });
-	        
-	        
-	        
-
 	    });
 }
