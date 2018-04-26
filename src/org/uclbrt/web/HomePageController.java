@@ -1,11 +1,15 @@
 package org.uclbrt.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
 import org.uclbrt.entity.UserCategory;
@@ -190,6 +196,23 @@ public class HomePageController implements SystemConstant {
 	@RequestMapping(value ="/publishSuccess.form", method = RequestMethod.GET)
 	public String publishSuccess(ModelMap map,HttpSession session) {
 		return "../jsp/topic/publish-success";	
+	}
+	@RequestMapping(value ="/addPet.form", method = RequestMethod.POST)
+	public String addPet(MultipartFile pic,HttpServletRequest req)
+	            throws IllegalStateException, IOException {
+		 			if (!pic.isEmpty()) {
+				String path=req.getServletContext().getRealPath("/");
+				String img_path ="images/";
+	            String originalFileName = pic.getOriginalFilename();
+	            // 新的图片名称
+	            String newFileName = UUID.randomUUID() + originalFileName.substring(originalFileName.lastIndexOf("."));
+	            // 新的图片
+	            File newFile = new File(path +img_path+newFileName);
+	            System.out.println(path +img_path+newFileName);
+	            // 将内存中的数据写入磁盘
+	            pic.transferTo(newFile);
+	        }
+			return "123";
 	}
 
 }

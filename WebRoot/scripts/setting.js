@@ -6,7 +6,7 @@
              $.ajaxFileUpload
             (
                 {
-                    url: '/myblog/uploadImg/', //用于文件上传的服务器端请求地址
+                    url: '/microblog/homePage/addPet.form', //用于文件上传的服务器端请求地址
                     secureuri: false, //是否需要安全协议，一般设置为false
                     fileElementId: 'photo', //文件上传域的ID
                     dataType: 'json', //返回值类型 一般设置为json

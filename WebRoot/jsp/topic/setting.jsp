@@ -23,6 +23,10 @@
     </div>
     <div class="am-u-md-9 am-u-sm-12" id="user-list">
         <div class="am-form-group">
+        <form action="/microblog/homePage/addPet.form" method="post" enctype="multipart/form-data">
+　　			<input type="file" required="required" name="pic" id="exampleInputFile">
+			<input type="submit" class="am-btn am-btn-default btn-submit" >提交</input>
+		</form>
             <form method="POST" enctype="multipart/form-data" class="am-form">
                 <fieldset>
                     <div class="am-form-group">
@@ -83,6 +87,7 @@
                     </p>
                 </fieldset>
             </form>
+     
         </div>
 
     </div>
