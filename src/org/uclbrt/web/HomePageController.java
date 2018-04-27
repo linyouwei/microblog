@@ -104,10 +104,7 @@ public class HomePageController implements SystemConstant {
 		if(!EmptyUtil.isNullOrEmpty(user)){
 			//获取userDetail
 			UserDetail userDetail = homePageService.findDetailByUserId(user.getId());
-			//获取评论
-			List<Comment> commentList = homePageService.getCommentByDailyId(user.getId());
 			map.put("userDetail",userDetail);	
-			map.put("commentList",commentList);	
 			return "../jsp/topic/setting";	
 		}
 		return "../jsp/topic/setting";	
@@ -200,6 +197,7 @@ public class HomePageController implements SystemConstant {
 	public String publishSuccess(ModelMap map,HttpSession session) {
 		return "../jsp/topic/publish-success";	
 	}
+	
 //	@RequestMapping(value ="/addPhoto.form", method = RequestMethod.POST)
 //	public String addPet(MultipartFile photo,HttpServletRequest req) throws IllegalStateException, IOException {
 //		if (!photo.isEmpty()) {

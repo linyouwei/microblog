@@ -196,6 +196,36 @@ public class TestCase {
 //		}  
 //		
 //	}
+//	@Test
+//	public void testDemo() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			DailyMapper mapper = session.getMapper(DailyMapper.class);
+//			Daily daily = new Daily();
+//			daily.setBody("3333");
+//			daily.setCategoryId(Integer.parseInt("1"));
+//			daily.setClick(0);
+//			Date createdTime = new Date(); 
+//			daily.setCreatedTime(createdTime);
+//			daily.setModifiedTime(createdTime);
+//			daily.setTitle("34233423");
+//			UserLogin userInfo = new UserLogin();
+//			userInfo.setId(1);
+//			daily.setUserInfo(userInfo);
+//			mapper.addDaily(daily);
+//			session.commit();
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
+	
 	@Test
 	public void testDemo() {
 		String conf = "sqlMapConfig.xml";
@@ -204,20 +234,9 @@ public class TestCase {
 			reader = Resources.getResourceAsReader(conf);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 			SqlSession session = sqlSessionFactory.openSession();
-			DailyMapper mapper = session.getMapper(DailyMapper.class);
-			Daily daily = new Daily();
-			daily.setBody("3333");
-			daily.setCategoryId(Integer.parseInt("1"));
-			daily.setClick(0);
-			Date createdTime = new Date(); 
-			daily.setCreatedTime(createdTime);
-			daily.setModifiedTime(createdTime);
-			daily.setTitle("34233423");
-			UserLogin userInfo = new UserLogin();
-			userInfo.setId(1);
-			daily.setUserInfo(userInfo);
-			mapper.addDaily(daily);
-			session.commit();
+			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
+			System.out.println(mapper.findDetailByUserId(1).getProvince().getName());
+
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -225,6 +244,7 @@ public class TestCase {
 		}  
 		
 	}
+
 
 
 
