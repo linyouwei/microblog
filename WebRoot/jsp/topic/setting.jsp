@@ -4,7 +4,7 @@
 <html>
 <head>
 	<jsp:include page="../common/head.jsp"/>
-	<link rel="stylesheet href="${pageContext.request.contextPath}/styles/setting.css"/>
+	 <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/setting.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/scripts/common/datetimepicker/css/amazeui.datetimepicker.css"/>
     
 </head>
@@ -23,15 +23,18 @@
     </div>
     <div class="am-u-md-9 am-u-sm-12" id="user-list">
         <div class="am-form-group">
+        <!-- form表单提交图片 -->
+        <!--
         <form action="/microblog/homePage/addPet.form" method="post" enctype="multipart/form-data">
 　　			<input type="file" required="required" name="pic" id="exampleInputFile">
 			<input type="submit" class="am-btn am-btn-default btn-submit" >提交</input>
 		</form>
+        -->
             <form method="POST" enctype="multipart/form-data" class="am-form">
                 <fieldset>
                     <div class="am-form-group">
                         <img class="avatar " id='avatar'
-                             src="{{user_img.img_path}}">
+                             src="">
                         <a class="btn btn-hollow"><input unselectable="on" type="file" class="hide" id="photo" name="photo">更改头像</a></div>
                     <div class="am-form-group">
                         <label for="doc-ipt-email-1" class="btn-color">昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称:</label>

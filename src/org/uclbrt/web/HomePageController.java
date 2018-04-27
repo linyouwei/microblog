@@ -29,6 +29,9 @@ import org.uclbrt.entity.UserLogin;
 import org.uclbrt.service.HomePageService;
 import org.uclbrt.util.EmptyUtil;
 import org.uclbrt.util.SystemConstant;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.RandomStringUtils;  
+import org.apache.commons.lang.math.RandomUtils; 
 
 /**
  * 用户登录,注册等功能
@@ -197,22 +200,52 @@ public class HomePageController implements SystemConstant {
 	public String publishSuccess(ModelMap map,HttpSession session) {
 		return "../jsp/topic/publish-success";	
 	}
-	@RequestMapping(value ="/addPet.form", method = RequestMethod.POST)
-	public String addPet(MultipartFile pic,HttpServletRequest req)
-	            throws IllegalStateException, IOException {
-		 			if (!pic.isEmpty()) {
-				String path=req.getServletContext().getRealPath("/");
-				String img_path ="images/";
-	            String originalFileName = pic.getOriginalFilename();
-	            // 新的图片名称
-	            String newFileName = UUID.randomUUID() + originalFileName.substring(originalFileName.lastIndexOf("."));
-	            // 新的图片
-	            File newFile = new File(path +img_path+newFileName);
-	            System.out.println(path +img_path+newFileName);
-	            // 将内存中的数据写入磁盘
-	            pic.transferTo(newFile);
-	        }
-			return "123";
+//	@RequestMapping(value ="/addPhoto.form", method = RequestMethod.POST)
+//	public String addPet(MultipartFile photo,HttpServletRequest req) throws IllegalStateException, IOException {
+//		if (!photo.isEmpty()) {
+//				String path=req.getServletContext().getRealPath("/");
+//				String img_path ="images/";
+//	            String originalFileName = photo.getOriginalFilename();
+//	            // 新的图片名称
+//	            String newFileName = UUID.randomUUID() + originalFileName.substring(originalFileName.lastIndexOf("."));
+//	            // 新的图片
+//	            File newFile = new File(path +img_path+newFileName);
+//	            System.out.println(path +img_path+newFileName);
+//	            // 将内存中的数据写入磁盘
+//	            photo.transferTo(newFile);
+//	        }
+//			return "123";
+//	}
+	@RequestMapping(value ="/addPhoto.form", method = RequestMethod.POST)
+	@ResponseBody 
+	public Result addPhoto(@RequestParam("photo") MultipartFile photo,HttpServletRequest req) throws IllegalStateException, IOException {
+		String relPathOfSavedDir = "/Uploads/images/";
+		 try {    
+	           File savedDir = prepareSavedDir(req, relPathOfSavedDir);    
+	           String savedFileName=getSavedFileName(photo.getOriginalFilename());    
+	           photo.transferTo(new File(savedDir,savedFileName));    
+	           String imgUrl=req.getContextPath()+relPathOfSavedDir+savedFileName;  
+	           System.out.println("imgUrl:"+imgUrl);
+	           Map<String, Object> map=new HashMap();  
+	           map.put("imgUrl", imgUrl);  
+	           return  new Result(map);    
+	       } catch (Exception e) {    
+	           return null;    
+	       }    
 	}
+	 private File prepareSavedDir(HttpServletRequest request,String relativePath) throws Exception{    
+	       File dir=new File(request.getSession().getServletContext().getRealPath(relativePath));   
+	       System.out.println("dir:"+request.getSession().getServletContext().getRealPath(relativePath));
+	       if(!dir.exists()){    
+	           if(!dir.mkdirs()){    
+	               throw new Exception("创建保存目录失败");    
+	           }    
+	       }    
+	       return dir;    
+	   }    
+	       
+	   private String getSavedFileName(String origFileName){    
+	       return RandomStringUtils.randomNumeric(16)+"."+FilenameUtils.getExtension(origFileName);    
+	   }   
 
 }

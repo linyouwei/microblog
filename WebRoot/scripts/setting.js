@@ -3,17 +3,18 @@
              ajaxFileUpload();
         })
          function ajaxFileUpload(){
+        	//异步上传图片
              $.ajaxFileUpload
             (
                 {
-                    url: '/microblog/homePage/addPet.form', //用于文件上传的服务器端请求地址
+                    url: '/microblog/homePage/addPhoto.form', //用于文件上传的服务器端请求地址
                     secureuri: false, //是否需要安全协议，一般设置为false
                     fileElementId: 'photo', //文件上传域的ID
                     dataType: 'json', //返回值类型 一般设置为json
                     success: function (data, status)  //服务器成功响应处理函数
                     {
-                        console.log(data.url);
-                        $("#avatar").attr("src", data.url);
+                        console.log(data.data.imgUrl);
+                        $("#avatar").attr("src", data.data.imgUrl);
                         $("#photo").change(function () {
                                 ajaxFileUpload();
                         })
