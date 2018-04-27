@@ -109,6 +109,23 @@ public class HomePageController implements SystemConstant {
 		}
 		return "../jsp/topic/setting";	
 	}
+	@RequestMapping(value ="/settingBasic.form", method = RequestMethod.POST)
+	public String addUserDetail(@RequestBody  Map<String, Object>  param,HttpSession session) {
+
+		String title = (String) param.get("nickname");
+		String birth_time = (String) param.get("birth_time");
+		String province = (String) param.get("province");
+		String city = (String) param.get("city");
+		String marriage = (String) param.get("marriage");
+		String gender = (String) param.get("gender");
+		UserLogin user = (UserLogin) session.getAttribute("user");
+		if(!EmptyUtil.isNullOrEmpty(user)){
+			//获取userDetail
+			int i  = homePageService.addUserDetail(title,birth_time,province,city,marriage,gender,user.getId());
+			return "../jsp/topic/setting";	
+		}
+		return "../jsp/topic/setting";	
+	}
 	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.GET)
 	public String publishEditIndex(ModelMap map,HttpSession session) {
 		//获取用户基本信息

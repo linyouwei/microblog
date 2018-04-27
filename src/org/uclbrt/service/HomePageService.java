@@ -100,4 +100,9 @@ public class HomePageService implements SystemConstant {
 		int id =  dailyMapper.addUserDailyDetail(dailyId,userCategoryId);
 		return id;
 	}
+	public int addUserDetail(String title,String birth_time,String province,String city,String marriage,String gender,int userId){
+		UserDetail useDetail = new UserDetail();
+		int id =  userDetailMapper.addUserDailyDetail(useDetail);
+		return id;
+	}
 }

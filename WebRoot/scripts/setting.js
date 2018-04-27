@@ -59,26 +59,39 @@
 
 //提交基础设置资料
  function submitFormData(){
- 	$.post('/myblog/setting_basic/', {
-         'nickname': $("#nickname").val(),
-         'birth_time': $("#birth_time").val(),
-         'province': $("#province").val(),
-         'city': $("#city").val(),
-         'marriage': $("#marriage").val(),
-         'gender': $('input:radio:checked').val()
-//     $("input[type='radio']:checked").val();
-     }, function (data) {
-         console.log(data.status);
-         if (data.status == 200) {
-             layer.tips('保存成功', '#submit');
-         } else {
-             layer.tips('保存失败', '#submit');
-
+	var param= {
+	         'nickname': $("#nickname").val(),
+	         'birth_time': $("#birth_time").val(),
+	         'province': $("#province").val(),
+	         'city': $("#city").val(),
+	         'marriage': $("#marriage").val(),
+	         'gender': $('input:radio:checked').val()
+//	     $("input[type='radio']:checked").val();
+	     };
+	console.log(param);
+	 $.ajax({
+         dataType: "JSON",
+         contentType:'application/json;charset=UTF-8',//关键是要加上这行
+         traditional:true,//这使json格式的字符不会被转码
+         data: JSON.stringify(param),
+         type: "POST", 
+         timeout: 20000,
+         url: basePath+'homePage/settingBasic.form',
+         success : function (data) {
+     		console.log(data);
+     		if(data.data.status==200){
+     			layer.tips('保存成功', '#submit');
+     		}else{
+     			 layer.tips('保存失败', '#submit');
+     		}
+         },
+         error : function (data){    
          }
+     });
 
-     }
- )
  }
+ 
+ 
 
  function addProvinceOption(){
 
