@@ -26,5 +26,11 @@ public class City {
 	public void setProvince(Province province) {
 		this.province = province;
 	}
+	@Override
+	public String toString() {
+		return "City [code=" + code + ", name=" + name + ", province="
+				+ province + "]";
+	}
+	
 	
 }

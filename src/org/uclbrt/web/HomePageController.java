@@ -2,6 +2,8 @@ package org.uclbrt.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.uclbrt.entity.City;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
+import org.uclbrt.entity.Province;
 import org.uclbrt.entity.UserCategory;
 import org.uclbrt.entity.UserDetail;
 import org.uclbrt.entity.UserLogin;
@@ -112,16 +116,38 @@ public class HomePageController implements SystemConstant {
 	@RequestMapping(value ="/settingBasic.form", method = RequestMethod.POST)
 	public String addUserDetail(@RequestBody  Map<String, Object>  param,HttpSession session) {
 
-		String title = (String) param.get("nickname");
+		String nickname = (String) param.get("nickname");
 		String birth_time = (String) param.get("birth_time");
-		String province = (String) param.get("province");
-		String city = (String) param.get("city");
+		String province_code = (String) param.get("province");
+		String city_code = (String) param.get("city");
 		String marriage = (String) param.get("marriage");
 		String gender = (String) param.get("gender");
 		UserLogin user = (UserLogin) session.getAttribute("user");
 		if(!EmptyUtil.isNullOrEmpty(user)){
 			//获取userDetail
-			int i  = homePageService.addUserDetail(title,birth_time,province,city,marriage,gender,user.getId());
+			UserDetail userDetail = new UserDetail();
+			UserLogin userLogin = new UserLogin();
+			Province province = new Province();
+			City city = new City();
+			
+			userLogin.setUserName(nickname);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			province.setCode(Integer.parseInt(province_code));
+			city.setCode(Integer.parseInt(city_code));
+			
+			try {
+				userDetail.setBirthday(sdf.parse(birth_time));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			userDetail.setProvince(province);
+			userDetail.setCity(city);
+			userDetail.setGender(Integer.parseInt(gender));
+			userDetail.setUserInfo(userLogin);
+			System.out.println(userDetail);
+			
+			int i  = homePageService.addUserDetail(userDetail);
 			return "../jsp/topic/setting";	
 		}
 		return "../jsp/topic/setting";	

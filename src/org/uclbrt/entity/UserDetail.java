@@ -67,10 +67,10 @@ public class UserDetail implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "UserDetail [birthday=" + birthday + ", city=" + city
+		return "UserDetail [birthday=" + birthday + ", city=" + city.toString()
 				+ ", gender=" + gender + ", id=" + id + ", img_path="
 				+ img_path + ", marriage=" + marriage + ", province="
-				+ province + ", userInfo=" + userInfo + "]";
+				+ province.toString() + ", userInfo=" + userInfo + "]";
 	}
 	
 	

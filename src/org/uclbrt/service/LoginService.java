@@ -37,7 +37,6 @@ public class LoginService implements SystemConstant {
 			user.setCreatedTime(d);
 			user.setRoleId('3');
 			userLoginMapper.save(user);
-			System.out.println("userLogin:"+user.toString());
 			//插入userDetail表
 			UserDetail ud = new UserDetail();
 			ud.setUserInfo(user);
