@@ -34,5 +34,9 @@
 	FROM ((`user_details` ud LEFT JOIN `user_login` ul ON  ud.`user_login_id`=ul.`id`) LEFT JOIN `province` p ON ud.`province`=p.`code` ) LEFT JOIN `city` c 
 	ON ud.`city`=c.`code` WHERE user_login_id=#{id}
  	</select> 
+ 	<insert id="addUserDetail" parameterType="org.uclbrt.entity.UserDetail"  useGeneratedKeys="true" keyProperty="id">
+		insert into `user_details`(user_login_id) values
+		(#{userInfo.id});
+	</insert>
 	
 </mapper>

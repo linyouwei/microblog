@@ -32,6 +32,7 @@ import org.uclbrt.entity.UserCategory;
 import org.uclbrt.entity.UserDetail;
 import org.uclbrt.entity.UserLogin;
 import org.uclbrt.service.LoginService;
+import org.uclbrt.util.Md5Util;
 
 public class TestCase {
 
@@ -226,16 +227,49 @@ public class TestCase {
 //		
 //	}
 	
+//	@Test
+//	public void testDemo() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
+//			System.out.println(mapper.findDetailByUserId(1).getProvince().getName());
+//
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
+//	
 	@Test
-	public void testDemo() {
+	public void testAddUser() {
 		String conf = "sqlMapConfig.xml";
 		Reader reader;
 		try {
 			reader = Resources.getResourceAsReader(conf);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 			SqlSession session = sqlSessionFactory.openSession();
-			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
-			System.out.println(mapper.findDetailByUserId(1).getProvince().getName());
+			UserLoginMapper mapper = session.getMapper(UserLoginMapper.class);
+			UserLogin user = new UserLogin();
+			user.setUserName("yyy");
+			user.setPassword(Md5Util.md5("1234"));
+			user.setRoleId(3);
+			Date date = new Date();
+			user.setCreatedTime(date);
+			mapper.save(user);
+			session.commit();
+			//插入userDetail表
+			UserDetail ud = new UserDetail();
+			ud.setUserInfo(user);
+			UserDetailMapper uMapper = session.getMapper(UserDetailMapper.class);
+			uMapper.addUserDetail(ud);
+			session.commit();
+			System.out.println(ud.getId());
 
 			
 		} catch (IOException e) {

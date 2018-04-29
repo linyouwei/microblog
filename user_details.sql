@@ -4,7 +4,7 @@ create table `user_details`(
   `user_login_id` int(5) not null,
   `gender` int(1),
   `img_path` varchar(50),
-  `birthday` datetime not null,
+  `birthday` datetime ,
   `province` int(11),
   `city` int(11),
   `marriage` int(1),

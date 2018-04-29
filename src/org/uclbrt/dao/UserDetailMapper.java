@@ -5,5 +5,5 @@ import org.uclbrt.entity.UserLogin;
 
 public interface UserDetailMapper {
 	UserDetail findDetailByUserId(int userId);
-	int addUserDailyDetail(UserDetail user);
+	int addUserDetail(UserDetail user);
 }

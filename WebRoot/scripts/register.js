@@ -11,14 +11,14 @@ $(function(){
 function register() { 
 	var username = $("#user_nickname").val();
 	var password = $("#user_password").val();
-	$.post('/microblog/myblog/register.form', {
+	$.post(basePath+'/webUser/register.form', {
 	    'username': username,
 	    'password': password
 		}, function (data) {
 			console.log(data);
-			if(data.success==true){
+			if(data.data.pass==true){
 				layer.tips('注册成功', '#sign-up');
-				location.href("/microblog/sign/login.html")
+				 window.location.href=basePath+'/webUser/login.form';
 			}else{
 				layer.tips('注册失败', '#sign-up');
 			}

@@ -27,19 +27,19 @@ public class LoginController implements SystemConstant {
 	private LoginService loginService;
 
 	@RequestMapping(value ="/register.form", method = RequestMethod.GET)
-	public String register(UserLogin user) {
-		if (user == null) {
-			throw new RuntimeException("参数为空");
-		}
-		Map<String, Object> map = loginService.addUser(user);
+	public String register() {
 		return "../jsp/user/register";
 	}
 	@RequestMapping(value ="/register.form", method = RequestMethod.POST)
 	@ResponseBody
-	public Result toRegister(UserLogin user) {
-		if (user == null) {
+	public Result toRegister(String username,String password ) {
+		if (username == null || password == null) {
 			throw new RuntimeException("参数为空");
 		}
+		System.out.println(username+password);
+		UserLogin user = new UserLogin();
+		user.setUserName(username);
+		user.setPassword(password);
 		Map<String, Object> map = loginService.addUser(user);
 		return new Result(map);
 	}
