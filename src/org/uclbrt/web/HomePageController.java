@@ -114,7 +114,8 @@ public class HomePageController implements SystemConstant {
 		return "../jsp/topic/setting";	
 	}
 	@RequestMapping(value ="/settingBasic.form", method = RequestMethod.POST)
-	public String addUserDetail(@RequestBody  Map<String, Object>  param, ModelMap map,HttpSession session) {
+	@ResponseBody
+	public Result addUserDetail(@RequestBody  Map<String, Object>  param, ModelMap map,HttpSession session) {
 
 		String nickname = (String) param.get("nickname");
 		String birth_time = (String) param.get("birth_time");
@@ -124,6 +125,7 @@ public class HomePageController implements SystemConstant {
 		String gender = (String) param.get("gender");
 		UserLogin user = (UserLogin) session.getAttribute("user");
 		System.out.println(user.getId());
+		Map<String,Object> hmap = new HashMap(); 
 		if(!EmptyUtil.isNullOrEmpty(user)){
 			//获取userDetail
 			UserDetail userDetail = new UserDetail();
@@ -158,11 +160,13 @@ public class HomePageController implements SystemConstant {
 			userDetail.setUserInfo(userLogin);
 			System.out.println("5555"+userDetail.toString());
 			
-			homePageService.updateUserDetail(userDetail);
-			map.put("userDetail",userDetail);	
-			return "../jsp/topic/setting";	
+			int i = homePageService.updateUserDetail(userDetail);
+			if(i>0){
+				hmap.put("status",200);
+			}
+			return new Result(hmap);	
 		}
-		return "../jsp/topic/setting";	
+		return new Result(hmap);	
 	}
 	@RequestMapping(value ="/publishEdit.form", method = RequestMethod.GET)
 	public String publishEditIndex(ModelMap map,HttpSession session) {

@@ -105,8 +105,8 @@ public class HomePageService implements SystemConstant {
 		int id =  dailyMapper.addUserDailyDetail(dailyId,userCategoryId);
 		return id;
 	}
-	public void updateUserDetail(UserDetail userDetail){
-		userDetailMapper.updateUserDetail(userDetail);
-
+	public int updateUserDetail(UserDetail userDetail){
+		int i = userDetailMapper.updateUserDetail(userDetail);
+		return i;
 	}
 }

@@ -293,9 +293,9 @@ public class TestCase {
 			
 			userDetail.setUserInfo(user);
 			System.out.println(userDetail.toString());
-			mapper.updateUserDetail(userDetail);
-			
+			int i = mapper.updateUserDetail(userDetail);
 			session.commit();
+			System.out.println(i);
 
 			
 		} catch (IOException e) {

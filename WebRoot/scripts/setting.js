@@ -81,6 +81,7 @@
      		console.log(data);
      		if(data.data.status==200){
      			layer.tips('保存成功', '#submit');
+     			window.location.href='/microblog/homePage/setting.form';
      		}else{
      			 layer.tips('保存失败', '#submit');
      		}
