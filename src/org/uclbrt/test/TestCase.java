@@ -275,24 +275,22 @@ public class TestCase {
 			Province province = new Province();
 			City city = new City();
 			user.setId(1);
-			user.setUserName("yyyy");
+//			user.setUserName("yyyy");
 			//UserDetail [birthday=Tue Apr 10 00:00:00 GMT+08:00 2018, city=City [code=4201, name=null, province=null], 
 			//gender=0, id=0, img_path=null, marriage=1, province=org.uclbrt.entity.Province@144dc7b, 
 			//userInfo=UserLogin [createdTime=null, id=1, password=null, roleId=0, userName=www]]
 
-			province.setCode(14);
-			city.setCode(1401);
-			Date date = new Date();
-			userDetail.setBirthday(date);
-			userDetail.setProvince(province);
-			userDetail.setCity(city);
-			userDetail.setGender(0);
-			userDetail.setMarriage(1);
+//			province.setCode(14);
+//			city.setCode(1401);
+//			Date date = new Date();
+//			userDetail.setBirthday(date);
+//			userDetail.setProvince(province);
+//			userDetail.setCity(city);
+//			userDetail.setGender(0);
+//			userDetail.setMarriage(1);
 			
-			
-			
+			userDetail.setImg_path("/microblog/Uploads/images/6459956910456571.jpg");
 			userDetail.setUserInfo(user);
-			System.out.println(userDetail.toString());
 			int i = mapper.updateUserDetail(userDetail);
 			session.commit();
 			System.out.println(i);

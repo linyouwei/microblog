@@ -275,20 +275,40 @@ public class HomePageController implements SystemConstant {
 //	}
 	@RequestMapping(value ="/addPhoto.form", method = RequestMethod.POST)
 	@ResponseBody 
-	public Result addPhoto(@RequestParam("photo") MultipartFile photo,HttpServletRequest req) throws IllegalStateException, IOException {
-		String relPathOfSavedDir = "/Uploads/images/";
-		 try {    
-	           File savedDir = prepareSavedDir(req, relPathOfSavedDir);    
-	           String savedFileName=getSavedFileName(photo.getOriginalFilename());    
-	           photo.transferTo(new File(savedDir,savedFileName));    
-	           String imgUrl=req.getContextPath()+relPathOfSavedDir+savedFileName;  
-	           System.out.println("imgUrl:"+imgUrl);
-	           Map<String, Object> map=new HashMap();  
-	           map.put("imgUrl", imgUrl);  
-	           return  new Result(map);    
-	       } catch (Exception e) {    
-	           return null;    
-	       }    
+	public Result addPhoto(@RequestParam("photo") MultipartFile photo,HttpServletRequest req,HttpSession session) throws IllegalStateException, IOException {
+		Map<String, Object> map=new HashMap();  
+		UserLogin user = (UserLogin) session.getAttribute("user");
+		if(user!=null){
+			String relPathOfSavedDir = "/Uploads/images/";
+			 try {    
+		           File savedDir = prepareSavedDir(req, relPathOfSavedDir);    
+		           String savedFileName=getSavedFileName(photo.getOriginalFilename());    
+		           photo.transferTo(new File(savedDir,savedFileName));    
+		           String imgUrl=relPathOfSavedDir+savedFileName;  
+		           System.out.println("imgUrl:"+imgUrl);
+		           
+		           map.put("imgUrl", imgUrl);  
+		           
+		           	//存储该图片路径
+		            UserDetail userDetail = new UserDetail();
+					UserLogin userLogin = new UserLogin();
+					Province province = new Province();
+					City city = new City();
+					userLogin.setId(user.getId());
+					userDetail.setImg_path(imgUrl);		
+					userDetail.setUserInfo(userLogin);
+					int i = homePageService.updateUserDetail(userDetail);
+					if(i>0){
+						map.put("status",200);
+					}
+					return new Result(map);	
+		       } catch (Exception e) {    
+		           return null;    
+		       }    
+			
+		}
+		return  new Result(map);    
+		
 	}
 	 private File prepareSavedDir(HttpServletRequest request,String relativePath) throws Exception{    
 	       File dir=new File(request.getSession().getServletContext().getRealPath(relativePath));   
