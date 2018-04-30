@@ -38,5 +38,29 @@
 		insert into `user_details`(user_login_id) values
 		(#{userInfo.id});
 	</insert>
+	 <update id="updateUserDetail" parameterType="org.uclbrt.entity.UserDetail" >
+        update user_details
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gender!=null and gender!=''">
+                gender=#{gender},
+            </if>
+            <if test="img_path!=null and img_path!=''">
+                img_path=#{img_path},
+            </if>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="province!=null">
+                province=#{province.code},
+            </if>
+            <if test="city!=null">
+                city=#{city.code},
+            </if>
+            <if test="marriage!=null and marriage!=''">
+                marriage=#{marriage},
+            </if>
+        </trim>
+        where user_login_id=#{userInfo.id}
+    </update>
 	
 </mapper>

@@ -4,35 +4,18 @@ package org.uclbrt.test;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.uclbrt.dao.CommentMapper;
-import org.uclbrt.dao.DailyMapper;
-import org.uclbrt.dao.UserCategoryMapper;
 import org.uclbrt.dao.UserDetailMapper;
-import org.uclbrt.dao.UserLoginMapper;
-import org.uclbrt.entity.Comment;
-import org.uclbrt.entity.Daily;
-import org.uclbrt.entity.UserCategory;
+import org.uclbrt.entity.City;
+import org.uclbrt.entity.Province;
 import org.uclbrt.entity.UserDetail;
 import org.uclbrt.entity.UserLogin;
-import org.uclbrt.service.LoginService;
-import org.uclbrt.util.Md5Util;
 
 public class TestCase {
 
@@ -246,30 +229,73 @@ public class TestCase {
 //		
 //	}
 //	
+//	@Test
+//	public void testAddUser() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			UserLoginMapper mapper = session.getMapper(UserLoginMapper.class);
+//			UserLogin user = new UserLogin();
+//			user.setUserName("yyy");
+//			user.setPassword(Md5Util.md5("1234"));
+//			user.setRoleId(3);
+//			Date date = new Date();
+//			user.setCreatedTime(date);
+//			mapper.save(user);
+//			session.commit();
+//			//插入userDetail表
+//			UserDetail ud = new UserDetail();
+//			ud.setUserInfo(user);
+//			UserDetailMapper uMapper = session.getMapper(UserDetailMapper.class);
+//			uMapper.addUserDetail(ud);
+//			session.commit();
+//			System.out.println(ud.getId());
+//
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
 	@Test
-	public void testAddUser() {
+	public void testUpdate() {
 		String conf = "sqlMapConfig.xml";
 		Reader reader;
 		try {
 			reader = Resources.getResourceAsReader(conf);
 			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
 			SqlSession session = sqlSessionFactory.openSession();
-			UserLoginMapper mapper = session.getMapper(UserLoginMapper.class);
+			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
 			UserLogin user = new UserLogin();
-			user.setUserName("yyy");
-			user.setPassword(Md5Util.md5("1234"));
-			user.setRoleId(3);
+			UserDetail userDetail = new UserDetail();
+			Province province = new Province();
+			City city = new City();
+			user.setId(1);
+			user.setUserName("yyyy");
+			//UserDetail [birthday=Tue Apr 10 00:00:00 GMT+08:00 2018, city=City [code=4201, name=null, province=null], 
+			//gender=0, id=0, img_path=null, marriage=1, province=org.uclbrt.entity.Province@144dc7b, 
+			//userInfo=UserLogin [createdTime=null, id=1, password=null, roleId=0, userName=www]]
+
+			province.setCode(14);
+			city.setCode(1401);
 			Date date = new Date();
-			user.setCreatedTime(date);
-			mapper.save(user);
+			userDetail.setBirthday(date);
+			userDetail.setProvince(province);
+			userDetail.setCity(city);
+			userDetail.setGender(0);
+			userDetail.setMarriage(1);
+			
+			
+			
+			userDetail.setUserInfo(user);
+			System.out.println(userDetail.toString());
+			mapper.updateUserDetail(userDetail);
+			
 			session.commit();
-			//插入userDetail表
-			UserDetail ud = new UserDetail();
-			ud.setUserInfo(user);
-			UserDetailMapper uMapper = session.getMapper(UserDetailMapper.class);
-			uMapper.addUserDetail(ud);
-			session.commit();
-			System.out.println(ud.getId());
 
 			
 		} catch (IOException e) {

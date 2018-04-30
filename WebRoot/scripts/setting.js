@@ -76,7 +76,7 @@
          data: JSON.stringify(param),
          type: "POST", 
          timeout: 20000,
-         url: basePath+'homePage/settingBasic.form',
+         url: basePath+'/homePage/settingBasic.form',
          success : function (data) {
      		console.log(data);
      		if(data.data.status==200){

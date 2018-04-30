@@ -39,10 +39,10 @@ public class UserDetail implements Serializable {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	public String getBirthday() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-		return sdf.format(birthday);
+	public Date getBirthday() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		return birthday;
 	}
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
@@ -70,7 +70,7 @@ public class UserDetail implements Serializable {
 		return "UserDetail [birthday=" + birthday + ", city=" + city.toString()
 				+ ", gender=" + gender + ", id=" + id + ", img_path="
 				+ img_path + ", marriage=" + marriage + ", province="
-				+ province.toString() + ", userInfo=" + userInfo + "]";
+				+ province.toString() + ", userInfo=" + userInfo.toString() + "]";
 	}
 	
 	

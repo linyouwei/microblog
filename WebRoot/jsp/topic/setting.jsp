@@ -1,5 +1,9 @@
 
 <%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
+
 <!doctype html>
 <html>
 <head>
@@ -8,7 +12,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/scripts/common/datetimepicker/css/amazeui.datetimepicker.css"/>
     
 </head>
-
+<%
+	UserDetail userDetail = (UserDetail) request.getAttribute("userDetail");
+	System.out.println("333:"+userDetail.toString());
+	Date day = userDetail.getBirthday();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+	String birthday =sdf.format(day);
+	request.setAttribute("birthday",birthday);
+ %>
 <body id="blog">
 <%@ include file="../common/top.jsp" %>
 <div class="am-g am-g-fixed" id="dataListDiv">
@@ -55,7 +66,7 @@
                     </div>
                     <div class="am-form-group">
                         <label for="doc-ipt-file-1" style="width:40%;display: inline" class="btn-color">出生日期:</label>
-                        <input class="btn-hollow" type="text" value="${userDetail.birthday}"
+                        <input class="btn-hollow" type="text"  value="${birthday}"
                                class="am-form-field"
                                id="birth_time"
                                readonly required name="birth_time" style="width:40%;display: inline">

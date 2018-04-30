@@ -114,7 +114,7 @@ public class HomePageController implements SystemConstant {
 		return "../jsp/topic/setting";	
 	}
 	@RequestMapping(value ="/settingBasic.form", method = RequestMethod.POST)
-	public String addUserDetail(@RequestBody  Map<String, Object>  param,HttpSession session) {
+	public String addUserDetail(@RequestBody  Map<String, Object>  param, ModelMap map,HttpSession session) {
 
 		String nickname = (String) param.get("nickname");
 		String birth_time = (String) param.get("birth_time");
@@ -123,6 +123,7 @@ public class HomePageController implements SystemConstant {
 		String marriage = (String) param.get("marriage");
 		String gender = (String) param.get("gender");
 		UserLogin user = (UserLogin) session.getAttribute("user");
+		System.out.println(user.getId());
 		if(!EmptyUtil.isNullOrEmpty(user)){
 			//获取userDetail
 			UserDetail userDetail = new UserDetail();
@@ -131,23 +132,34 @@ public class HomePageController implements SystemConstant {
 			City city = new City();
 			
 			userLogin.setUserName(nickname);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			province.setCode(Integer.parseInt(province_code));
-			city.setCode(Integer.parseInt(city_code));
-			
-			try {
-				userDetail.setBirthday(sdf.parse(birth_time));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			if(birth_time!=null){
+				try {
+					userDetail.setBirthday(sdf.parse(birth_time));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 			}
+			
+			if(province_code!=null){
+				province.setCode(Integer.parseInt(province_code));
+			}
+			if(city_code!=null){
+				city.setCode(Integer.parseInt(city_code));
+			}
+			userLogin.setId(user.getId());
+			
+			
 			userDetail.setProvince(province);
 			userDetail.setCity(city);
 			userDetail.setGender(Integer.parseInt(gender));
+			userDetail.setMarriage(Integer.parseInt(marriage));
 			userDetail.setUserInfo(userLogin);
-			System.out.println(userDetail);
+			System.out.println("5555"+userDetail.toString());
 			
-			int i  = homePageService.addUserDetail(userDetail);
+			homePageService.updateUserDetail(userDetail);
+			map.put("userDetail",userDetail);	
 			return "../jsp/topic/setting";	
 		}
 		return "../jsp/topic/setting";	

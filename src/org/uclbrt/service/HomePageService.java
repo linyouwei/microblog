@@ -1,5 +1,7 @@
 package org.uclbrt.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +14,13 @@ import org.uclbrt.dao.CommentMapper;
 import org.uclbrt.dao.DailyMapper;
 import org.uclbrt.dao.UserCategoryMapper;
 import org.uclbrt.dao.UserDetailMapper;
+import org.uclbrt.entity.City;
 import org.uclbrt.entity.Comment;
 import org.uclbrt.entity.Daily;
+import org.uclbrt.entity.Province;
 import org.uclbrt.entity.UserCategory;
 import org.uclbrt.entity.UserDetail;
+import org.uclbrt.entity.UserLogin;
 import org.uclbrt.util.SystemConstant;
 
 @Service
@@ -100,9 +105,8 @@ public class HomePageService implements SystemConstant {
 		int id =  dailyMapper.addUserDailyDetail(dailyId,userCategoryId);
 		return id;
 	}
-	public int addUserDetail(UserDetail userDetail){
-		UserDetail useDetail = new UserDetail();
-		int id =  userDetailMapper.updateUserDailyDetail(useDetail);
-		return id;
+	public void updateUserDetail(UserDetail userDetail){
+		userDetailMapper.updateUserDetail(userDetail);
+
 	}
 }
