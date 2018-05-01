@@ -12,7 +12,7 @@
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-active"><a href="#">发现</a></li>
+            <li class="am-active"><a href="${pageContext.request.contextPath}/homePage/index.form">发现</a></li>
             <li  class="am-active"><a href="#">关注</a></li>
             <li  class="am-active"><a href="#">消息</a></li>
         </ul>
