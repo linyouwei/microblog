@@ -42,7 +42,7 @@
                     success: function (data, status)  //服务器成功响应处理函数
                     {
                         console.log(data.data.imgUrl);
-                        $("#avatar").attr("src", data.data.imgUrl);
+                        $("#avatar").attr("src", '/microblog'+data.data.imgUrl);
                         $("#photo").change(function () {
                                 ajaxFileUpload();
                         })
