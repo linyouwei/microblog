@@ -1,5 +1,5 @@
-drop table if exists `user_login`;
-create table `user_login`(
+drop table if exists `cmd_user_login`;
+create table `cms_user_login`(
   `id` int(5) not null auto_increment ,
   `user_name` varchar(20) not null,
   `password` varchar(50) not null ,

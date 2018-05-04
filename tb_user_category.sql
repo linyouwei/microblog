@@ -1,5 +1,5 @@
-drop table if exists `user_category`;
-create table `user_category`(
+drop table if exists `tb_user_category`;
+create table `tb_user_category`(
   `id` int(5) not null auto_increment ,
   `user_login_id` int(5) not null,
   `category_name` varchar(50) not null,

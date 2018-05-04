@@ -31,15 +31,15 @@
 	 </resultMap>            
     <select id="findDetailByUserId" parameterType="int" resultMap="detailResultMap">
  	SELECT ud.id,user_login_id u_id,gender,img_path,birthday,province p_id,p.`name` p_name,city c_id,c.`name` c_name, marriage,user_name,role_id
-	FROM ((`user_details` ud LEFT JOIN `user_login` ul ON  ud.`user_login_id`=ul.`id`) LEFT JOIN `province` p ON ud.`province`=p.`code` ) LEFT JOIN `city` c 
+	FROM ((`tb_user_details` ud LEFT JOIN `tb_user_login` ul ON  ud.`user_login_id`=ul.`id`) LEFT JOIN `tb_province` p ON ud.`province`=p.`code` ) LEFT JOIN `tb_city` c 
 	ON ud.`city`=c.`code` WHERE user_login_id=#{id}
  	</select> 
  	<insert id="addUserDetail" parameterType="org.uclbrt.entity.UserDetail"  useGeneratedKeys="true" keyProperty="id">
-		insert into `user_details`(user_login_id) values
+		insert into `tb_user_details`(user_login_id) values
 		(#{userInfo.id});
 	</insert>
 	 <update id="updateUserDetail" parameterType="org.uclbrt.entity.UserDetail" >
-        update user_details
+        update `tb_user_details`
         <trim prefix="set" suffixOverrides=",">
             <if test="gender!=null and gender!=''">
                 gender=#{gender},

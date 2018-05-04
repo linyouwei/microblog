@@ -1,6 +1,6 @@
 
-drop table if exists `user_daily_tags`;
-create table `user_daily_tags`(
+drop table if exists `tb_user_daily_tags`;
+create table `tb_user_daily_tags`(
   `id` int(5) not null auto_increment ,
    `user_login_id` int(5) not null,
   `daily_id` int(5) not null  ,

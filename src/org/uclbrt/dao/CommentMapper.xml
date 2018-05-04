@@ -20,7 +20,7 @@
 	 </resultMap>    
  	 <select id="getCommentByDailyId" parameterType="int" resultMap="commentResultMap">
  	SELECT  c.id,content,c.created_time,user_name 
-	FROM (`comment`  c LEFT  JOIN `daily`  d ON c.daily_id=d.id) LEFT JOIN `user_login` u ON c.user_id = u.id 
+	FROM (`tb_comment`  c LEFT  JOIN `tb_daily`  d ON c.daily_id=d.id) LEFT JOIN `tb_user_login` u ON c.user_id = u.id 
 	WHERE c.id = #{id}
  	</select> 
 

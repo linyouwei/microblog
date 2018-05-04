@@ -1,5 +1,5 @@
-drop table if exists `user_details`;
-create table `user_details`(
+drop table if exists `tb_user_details`;
+create table `tb_user_details`(
  `id` int(5) not null auto_increment ,
   `user_login_id` int(5) not null,
   `gender` int(1),

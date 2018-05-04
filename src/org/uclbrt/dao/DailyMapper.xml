@@ -13,7 +13,7 @@
  	daily.modified_time,category_id,user_id,
  	user_name,password,user_login.created_time as user_created_time,role_id
  	from 
- 	daily left outer join user_login  ON  daily.`user_id`=user_login.`id`
+ 	`tb_daily` daily left outer join `tb_user_login` user_login  ON  daily.`user_id`=user_login.`id`
  	where user_id=#{id}
  	</select> 
  	<select id="getDailyByUserId" parameterType="int" resultMap="dailyResultMap">
@@ -22,7 +22,7 @@
  	daily.modified_time,category_id,user_id,
  	user_name,PASSWORD,user_login.created_time AS user_created_time,role_id
  	FROM 
- 	daily LEFT OUTER JOIN user_login  ON  daily.`user_id`=user_login.`id`
+ 	`tb_daily` daily LEFT OUTER JOIN `tb_user_login` user_login  ON  daily.`user_id`=user_login.`id`
  	WHERE daily.`id`=#{id}
  	</select>   
  	<select id="findAllDaily" resultMap="dailyResultMap">
@@ -31,7 +31,7 @@
  	daily.modified_time,category_id,user_id,
  	user_name,password,user_login.created_time as user_created_time,role_id
  	from 
- 	daily left outer join user_login  ON  daily.`user_id`=user_login.`id`
+ 	`tb_daily` daily left outer join `tb_user_login` user_login  ON  daily.`user_id`=user_login.`id`
  	</select>    
  	<select id="findRecentDaily" resultMap="dailyResultMap">
  	SELECT daily.id AS d_id,
@@ -39,7 +39,7 @@
  	daily.modified_time,category_id,user_id,
  	user_name,PASSWORD,user_login.created_time AS user_created_time,role_id
  	FROM 
- 	daily LEFT OUTER JOIN user_login  ON  daily.`user_id`=user_login.`id` ORDER BY d_created_time DESC  LIMIT 5
+ 	`tb_daily` daily  LEFT OUTER JOIN `tb_user_login` user_login ON  daily.`user_id`=user_login.`id` ORDER BY d_created_time DESC  LIMIT 5
  	</select> 
  	<select id="findUserRecentDaily" parameterType="int" resultMap="dailyResultMap">
  	SELECT daily.id AS d_id,
@@ -47,32 +47,35 @@
  	daily.modified_time,category_id,user_id,
  	user_name,PASSWORD,user_login.created_time AS user_created_time,role_id
  	FROM 
- 	daily LEFT OUTER JOIN user_login  ON  daily.`user_id`=user_login.`id` where user_id=#{id} ORDER BY d_created_time DESC  LIMIT 5
+ 	`tb_daily` daily LEFT OUTER JOIN `tb_user_login` user_login  ON  daily.`user_id`=user_login.`id` 
+ 	where user_id=#{id} ORDER BY d_created_time DESC  LIMIT 5
  	</select> 
  	<select id="getUserArchivesDate" parameterType="int" resultType="java.util.HashMap">
- 	SELECT COUNT(*) AS count, DATE_FORMAT( created_time, '%Y-%m') AS created_time FROM `daily`  where user_id =#{id} GROUP BY DATE_FORMAT( created_time, '%Y-%m')  ORDER BY created_time DESC	
+ 	SELECT COUNT(*) AS count, DATE_FORMAT( created_time, '%Y-%m') AS created_time FROM `tb_daily`  where user_id =#{id} GROUP BY DATE_FORMAT( created_time, '%Y-%m')  ORDER BY created_time DESC	
 	</select> 
 	<select id="getUserCategoryList" parameterType="int" resultType="java.util.HashMap">
-		SELECT id,category_name FROM `user_category` WHERE user_login_id = #{id}
+		SELECT id,category_name 
+		FROM `tb_user_category` 
+		WHERE user_login_id = #{id}
 	</select> 
  	<select id="getCategoryList" resultType="java.util.HashMap">
-		SELECT id,category_name FROM `category`
+		SELECT id,category_name FROM `tb_category`
 	</select> 
 	<select id="findUserCategoryByCategoryName" resultType="java.util.HashMap">
-		SELECT * FROM  `user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
+		SELECT * FROM  `tb_user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
 	</select> 
 	
 	<!-- 插入daily -->
 	<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" useGeneratedKeys="true" keyProperty="id">
-			INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+			INSERT INTO `tb_user_category`(user_login_id,category_name,is_delete)
 			VALUE(#{userInfo.id},#{categoryName},#{isDelete})
 	</insert>
 	<insert id="addUserDailyDetail" >
-		INSERT INTO `user_daily_details`(daily_id,user_category_id)
+		INSERT INTO `tb_user_daily_details`(daily_id,user_category_id)
 		VALUE(#{daily_id},#{user_category_id})
 	</insert>
 	<!--<insert id="addUserCategory" parameterType="org.uclbrt.entity.UserCategory" >
-			INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+			INSERT INTO `tb_user_category`(user_login_id,category_name,is_delete)
 			VALUE(#{userInfo.id},#{categoryName},#{isDelete})
 	</insert>
 	-->
@@ -83,11 +86,11 @@
 	-->
 	
 	<insert id="addDaily" parameterType="org.uclbrt.entity.Daily" useGeneratedKeys="true" keyProperty="id" >
-		INSERT INTO `daily`(`title`,`body`,`created_time`,`modified_time`,`category_id`,`user_id` ,`click`)
+		INSERT INTO `tb_daily`(`title`,`body`,`created_time`,`modified_time`,`category_id`,`user_id` ,`click`)
 		VALUES (#{title},#{body},#{createdTime},#{modifiedTime},#{categoryId},#{userInfo.id},#{click})
 	</insert>
 	<insert id="addDailyTag"  >
-		INSERT INTO `user_daily_tags`(user_login_id,daily_id,name)
+		INSERT INTO `tb_user_daily_tags`(user_login_id,daily_id,name)
 		VALUE(#{userId},#{dailyId},#{name})
 	</insert>
 	

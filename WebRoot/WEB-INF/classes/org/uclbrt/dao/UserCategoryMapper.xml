@@ -17,7 +17,7 @@
 	</insert>
 	--><!-- 或者 -->
 	<insert id="addUserCategory"  useGeneratedKeys="true" keyProperty="id" parameterMap="parameterUserCategoryMap">
-		INSERT INTO `user_category`(user_login_id,category_name,is_delete)
+		INSERT INTO `tb_user_category`(user_login_id,category_name,is_delete)
 		VALUE(#{userId},#{categoryName},#{isDelete})
 	</insert>
 	<resultMap type="org.uclbrt.entity.UserCategory" id="resultUserCategory">
@@ -50,10 +50,10 @@
 	</resultMap>
 	<select id="getUserCategoryByDailyId" resultMap="resultUserCategoryDailyMap" parameterType="int">
 		SELECT d.`id` d_id,d.*,ud.*
-		FROM `daily` d,`user_daily_details` ud
+		FROM `tb_daily` d,`tb_user_daily_details` ud
 		WHERE d.`id`=ud.`daily_id` AND ud.`user_category_id`=#{id}
 	</select>
 	<select id="findUserCategoryByCategoryName" resultType="java.util.HashMap">
-		SELECT * FROM  `user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
+		SELECT * FROM  `tb_user_category` WHERE category_name = #{category_name} and is_delete=0 and user_login_id=#{user_login_id}
 	</select> 
 </mapper>

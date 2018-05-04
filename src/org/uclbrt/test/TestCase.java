@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import org.uclbrt.dao.UserDetailMapper;
+import org.uclbrt.dao.UserLoginMapper;
 import org.uclbrt.entity.City;
 import org.uclbrt.entity.Province;
 import org.uclbrt.entity.UserDetail;
@@ -261,20 +262,20 @@ public class TestCase {
 //		}  
 //		
 //	}
-	@Test
-	public void testUpdate() {
-		String conf = "sqlMapConfig.xml";
-		Reader reader;
-		try {
-			reader = Resources.getResourceAsReader(conf);
-			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
-			SqlSession session = sqlSessionFactory.openSession();
-			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
-			UserLogin user = new UserLogin();
-			UserDetail userDetail = new UserDetail();
-			Province province = new Province();
-			City city = new City();
-			user.setId(1);
+//	@Test
+//	public void testUpdate() {
+//		String conf = "sqlMapConfig.xml";
+//		Reader reader;
+//		try {
+//			reader = Resources.getResourceAsReader(conf);
+//			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+//			SqlSession session = sqlSessionFactory.openSession();
+//			UserDetailMapper mapper = session.getMapper(UserDetailMapper.class);
+//			UserLogin user = new UserLogin();
+//			UserDetail userDetail = new UserDetail();
+//			Province province = new Province();
+//			City city = new City();
+//			user.setId(1);
 //			user.setUserName("yyyy");
 			//UserDetail [birthday=Tue Apr 10 00:00:00 GMT+08:00 2018, city=City [code=4201, name=null, province=null], 
 			//gender=0, id=0, img_path=null, marriage=1, province=org.uclbrt.entity.Province@144dc7b, 
@@ -289,12 +290,29 @@ public class TestCase {
 //			userDetail.setGender(0);
 //			userDetail.setMarriage(1);
 			
-			userDetail.setImg_path("/microblog/Uploads/images/6459956910456571.jpg");
-			userDetail.setUserInfo(user);
-			int i = mapper.updateUserDetail(userDetail);
-			session.commit();
-			System.out.println(i);
-
+//			userDetail.setImg_path("/microblog/Uploads/images/6459956910456571.jpg");
+//			userDetail.setUserInfo(user);
+//			int i = mapper.updateUserDetail(userDetail);
+//			session.commit();
+//			System.out.println(i);
+//
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//		
+//	}
+	@Test
+	public void testTT() {
+		String conf = "sqlMapConfig.xml";
+		Reader reader;
+		try {
+			reader = Resources.getResourceAsReader(conf);
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);  
+			SqlSession session = sqlSessionFactory.openSession();
+			UserLoginMapper mapper = session.getMapper(UserLoginMapper.class);
+			System.out.println(mapper.findByName("www"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -302,7 +320,6 @@ public class TestCase {
 		}  
 		
 	}
-
 
 
 
